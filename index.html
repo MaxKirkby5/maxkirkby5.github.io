@@ -180,6 +180,29 @@
             margin-top: 60px;
             font-size: 2.5rem;
         }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: opacity 0.2s ease;
+        }
+        
+        .social-link:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -205,10 +228,10 @@
             </div>
             
             <div class="bio-content">
-                <p>Hi, I’m Max Kirkby. I’m a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, where I am studying for a PhD in Computational Neuroscience. I’m originally from Adelaide, South Australia. </p>
+                <p>Hi, I'm Max Kirkby. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, where I am studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia. </p>
                 
                 <p>
-                    My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London. I’ll present the first findings of this work at <a href="https://rldm.org/">RLDM 2025</a> in Dublin. 
+                    My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London. I'll present the first findings of this work at <a href="https://rldm.org/">RLDM 2025</a> in Dublin. 
                 </p>
 
                 <p>Outside of research, I co-founded <a href="https://rake.news/">Rake News</a>,
@@ -218,7 +241,7 @@
                 </p>
 
                 <p>
-                    In a past life I was a Tuckwell Scholar at the ANU, where I completed a Bachelor of Philosophy (Science) in human biology, neuroscience and mathematics. 
+                    In a past life I was a <a href="https://tuckwell.anu.edu.au/about/scholarship">Tuckwell Scholar</a> at the ANU, where I completed a Bachelor of Philosophy (Science) in human biology, neuroscience and mathematics. 
                     My undergraduate included research across <a href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">innate immunology</a>, 
                     <a href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">neurodegeneration</a> and 
                     <a href="https://www.mdpi.com/2075-4418/14/22/2590">cardiology</a>. I completed this work through positions at the University of Sydney, ANU, and the Walter and Eliza Hall Institute.
@@ -230,6 +253,15 @@
             </div>
         </div>
     </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/max-kirkby15/" class="social-link">LinkedIn</a>
+            <a href="https://github.com/MaxKirkby5" class="social-link">GitHub</a>
+            <a href="https://x.com/kirkby_max" class="social-link">Twitter/X</a>
+            <a href="https://scholar.google.com/citations?user=SoMPEoIAAAAJ&hl=en" class="social-link">Google Scholar</a>
+        </div>
+    </footer>
 
     <script>
         const themeToggle = document.querySelector('.theme-toggle');
