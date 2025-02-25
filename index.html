@@ -150,7 +150,6 @@
         .site-title {
             font-weight: 500;
             font-size: 1.1rem;
-            position: relative;
         }
         
         .name-highlight {
@@ -165,8 +164,8 @@
             height: 120px;
             border-radius: 50%;
             overflow: hidden;
-            top: 40px;
-            left: 0;
+            top: 30px;
+            left: -20px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -242,10 +241,7 @@
 <body>
     <header>
         <div class="site-title">
-            <span class="name-highlight">Max Kirkby</span>
-            <div class="hover-photo">
-                <img src="images/personalweb.jpg" alt="Max Kirkby">
-            </div>
+            Max Kirkby
         </div>
         <nav>
             <a href="#">me</a>
@@ -266,7 +262,10 @@
             
             <div class="bio-content">
                 <h2>me</h2>
-                <p>Hi, I'm Max Kirkby. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia. </p>
+                <p>Hi, I'm <span class="name-highlight">Max Kirkby</span>
+                <div class="hover-photo">
+                    <img src="images/personalweb.jpg" alt="Max Kirkby">
+                </div>. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia. </p>
                 
                 <p>
                     My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London. I'll first present this work at <a href="https://rldm.org/">RLDM 2025</a> in Dublin. 
