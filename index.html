@@ -92,11 +92,11 @@
             margin-bottom: 0.8rem;
         }
         
-        /* Toggle switch styling */
+        /* Simplified toggle switch styling */
         .theme-toggle-wrapper {
             position: relative;
             display: inline-block;
-            width: 56px;
+            width: 54px;
             height: 28px;
             margin-left: 10px;
         }
@@ -120,83 +120,25 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
-        /* Sun icon container */
-        .toggle-slider .light-icon {
+        .toggle-slider:before {
             position: absolute;
+            content: "";
             height: 22px;
             width: 22px;
             left: 3px;
             bottom: 2px;
-            background-color: #aaa;
-            border-radius: 50%;
+            background-color: white;
             transition: .4s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Sun center and rays */
-        .toggle-slider .light-icon::before {
-            content: "";
-            position: absolute;
-            height: 10px;
-            width: 10px;
-            background-color: #666;
-            border-radius: 50%;
-            z-index: 2;
-        }
-        
-        .toggle-slider .light-icon::after {
-            content: "";
-            position: absolute;
-            height: 22px;
-            width: 22px;
-            background: radial-gradient(circle, transparent 5px, #aaa 5px, #aaa 6px, transparent 6px) center,
-                        radial-gradient(circle at 11px 4px, transparent 4px, #666 4px, #666 5px, transparent 5px) center,
-                        radial-gradient(circle at 18px 11px, transparent 4px, #666 4px, #666 5px, transparent 5px) center,
-                        radial-gradient(circle at 11px 18px, transparent 4px, #666 4px, #666 5px, transparent 5px) center,
-                        radial-gradient(circle at 4px 11px, transparent 4px, #666 4px, #666 5px, transparent 5px) center;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }
-        
-        /* Moon icon container */
-        .toggle-slider .dark-icon {
-            position: absolute;
-            height: 22px;
-            width: 22px;
-            right: 3px;
-            bottom: 2px;
-            background-color: #444;
-            border-radius: 50%;
-            transition: .4s;
-            opacity: 0;
-            overflow: hidden;
-        }
-        
-        /* Crescent moon shape */
-        .toggle-slider .dark-icon::before {
-            content: "";
-            position: absolute;
-            height: 18px;
-            width: 18px;
-            top: -4px;
-            right: -4px;
-            background-color: #eaeaea;
             border-radius: 50%;
         }
         
         /* Dark mode */
         .theme-toggle:checked + .toggle-slider {
-            background-color: #2a2a2a;
+            background-color: #3a3a3a;
         }
         
-        .theme-toggle:checked + .toggle-slider .light-icon {
-            opacity: 0;
-        }
-        
-        .theme-toggle:checked + .toggle-slider .dark-icon {
-            opacity: 1;
+        .theme-toggle:checked + .toggle-slider:before {
+            transform: translateX(26px);
         }
         
         .site-title {
@@ -246,10 +188,7 @@
             <a href="#">writing</a>
             <label class="theme-toggle-wrapper">
                 <input type="checkbox" class="theme-toggle">
-                <span class="toggle-slider">
-                    <span class="light-icon"></span>
-                    <span class="dark-icon"></span>
-                </span>
+                <span class="toggle-slider"></span>
             </label>
         </nav>
     </header>
