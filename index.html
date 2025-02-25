@@ -88,25 +88,58 @@
         .projects {
             color: #4a7a9d;
         }
+        
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .profile-photo {
+            flex: 0 0 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #eee; /* Placeholder until you add an image */
+        }
+        
+        .bio-content {
+            flex: 1;
+        }
+        
+        h1 {
+            margin-top: 60px;
+            font-size: 2.5rem;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="site-title">
-            <span>Max Kirkby</span> / <a href="#" class="projects">Projects</a>
+            <span>Max Kirkby</span>
         </div>
         <nav>
-            <a href="#">About</a>
-            <a href="#">Now</a>
+            <a href="#">me</a>
+            <a href="#">research</a>
+            <a href="#">writing</a>
             <button class="theme-toggle">☀️</button>
         </nav>
     </header>
 
     <main>
-        <h1>About me</h1>
+        <h1>Max Kirkby</h1>
         
-        <p>I'm Max. I am currentl a Rhodes Scholar at the University of Oxford, studying for a PhD in Computational Neuroscience.</p>
-                        
+        <div class="content-wrapper">
+            <div class="profile-photo">
+                <!-- Add your profile photo here -->
+            </div>
+            
+            <div class="bio-content">
+                <p>Max was previously a Tuckwell Scholar at the Australian National University (ANU). He held additional research appointments at the University of Sydney and University of Melbourne, where he published across the fields of cardiology, neuroimaging, neurodegeneration and immunology. He is currently working towards a DPhil in Clinical Neuroscience based in the Computational Neuroscience and Cognitive Circuits groups. His career aims to understand the structure and function of neural architectures involved in cognition, with the aim of applying these to artificial agents.</p>
+                
+                <p>Outside of science, Max has co-founded covidvolunteering.org, a charitable organisation dedicated to the COVID-19 response, and Rake, an AI startup that debiases news content. He has also led a First Nations initiative and volunteered and worked at several organisations dedicated to Indigenous Health throughout Australia. Max is a passionate cricketer and earnt an Oxford Blue in 2024.</p>
+            </div>
+        </div>
     </main>
 </body>
 </html>
