@@ -6,19 +6,19 @@
     <title>Obsidian Vault Template</title>
     <style>
         :root {
-            --background-color: #faf8f1;
-            --text-color: #333333;
-            --link-color: #333333;
+            --background-color: rgb(255, 252, 240);
+            --text-color: rgb(16, 15, 15);
+            --link-color: rgb(32, 94, 166);
             --nav-color: #666666;
-            --nav-hover-color: #3a8b76;
+            --nav-hover-color: rgb(32, 94, 166);
         }
         
         [data-theme="dark"] {
             --background-color: #1f2022;
             --text-color: #e0e0e0;
-            --link-color: #e0e0e0;
+            --link-color: rgb(94, 151, 218);
             --nav-color: #a0a0a0;
-            --nav-hover-color: #6fbea9;
+            --nav-hover-color: rgb(94, 151, 218);
         }
         
         body {
@@ -75,7 +75,12 @@
         
         a {
             color: var(--link-color);
-            text-decoration: underline;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        a:hover {
+            opacity: 0.8;
         }
         
         .external-link::after {
@@ -204,7 +209,10 @@
             <div class="bio-content">
                 <p>Max was previously a Tuckwell Scholar at the Australian National University (ANU). He held additional research appointments at the University of Sydney and University of Melbourne, where he published across the fields of cardiology, neuroimaging, neurodegeneration and immunology. He is currently working towards a DPhil in Clinical Neuroscience based in the Computational Neuroscience and Cognitive Circuits groups. His career aims to understand the structure and function of neural architectures involved in cognition, with the aim of applying these to artificial agents.</p>
                 
-                <p>Outside of science, Max has co-founded covidvolunteering.org, a charitable organisation dedicated to the COVID-19 response, and Rake, an AI startup that debiases news content. He has also led a First Nations initiative and volunteered and worked at several organisations dedicated to Indigenous Health throughout Australia. Max is a passionate cricketer and earnt an Oxford Blue in 2024.</p>
+                <p>
+                    I was formerly a Tuckwell Scholar at the ANU, where I completed a Bachelor of Philosophy (Science) in human biology, neuroscience and mathematics. 
+                    My undergraduate included research across <a href="https://www.immunology.org/public-information/bitesized-immunology/cells/innate-lymphoid-cells-ilcs">innate immunology</a>, neuroimaging, neurodegeneration and cardiology. 
+                </p>
             </div>
         </div>
     </main>
