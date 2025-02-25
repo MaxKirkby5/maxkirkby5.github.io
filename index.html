@@ -195,7 +195,7 @@
         
         <div class="content-wrapper">
             <div class="profile-photo">
-                <!-- Add your profile photo here -->
+                <img src="images/personalweb.jpg" alt="Max Kirkby" width="100%" height="100%" style="object-fit: cover;">
             </div>
             
             <div class="bio-content">
@@ -207,10 +207,8 @@
     </main>
 
     <script>
-        // Get the theme toggle element
         const themeToggle = document.querySelector('.theme-toggle');
         
-        // Function to set the theme
         function setTheme(isDark) {
             if (isDark) {
                 document.body.setAttribute('data-theme', 'dark');
@@ -219,17 +217,13 @@
                 document.body.removeAttribute('data-theme');
                 themeToggle.checked = false;
             }
-            // Save the preference
             localStorage.setItem('darkMode', isDark ? 'true' : 'false');
         }
         
-        // Check for saved theme preference
         const savedDarkMode = localStorage.getItem('darkMode') === 'true';
         
-        // Apply the saved preference or default to light mode
         setTheme(savedDarkMode);
         
-        // Add event listener for theme toggle
         themeToggle.addEventListener('change', () => {
             setTheme(themeToggle.checked);
         });
