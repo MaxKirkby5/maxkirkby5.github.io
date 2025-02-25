@@ -1,7 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian Vault Template</title>
+    <style>
+        :root {
+            --background-color: #faf8f1;
+            --text-color: #333333;
+            --link-color: #333333;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+        }
+        
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+        
+        .external-link::after {
+            content: "↗";
+            display: inline-block;
+            margin-left: 3px;
+        }
+        
+        ol {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .site-title {
+            font-weight: 500;
+        }
+        
+        .site-title a {
+            text-decoration: none;
+        }
+        
+        .projects {
+            color: #4a7a9d;
+        }
+    </style>
+</head>
 <body>
-<h1></h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <div class="site-title">
+            <span>Max Kirkby</span> / <a href="#" class="projects">Projects</a>
+        </div>
+        <nav>
+            <a href="#">About</a>
+            <a href="#">Now</a>
+            <button class="theme-toggle">☀️</button>
+        </nav>
+    </header>
+
+    <main>
+        <h1>About me</h1>
+        
+        <p>I'm Max. I am currentl a Rhodes Scholar at the University of Oxford, studying for a PhD in Computational Neuroscience.</p>
+                        
+    </main>
 </body>
 </html>
