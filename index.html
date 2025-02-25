@@ -150,6 +150,39 @@
         .site-title {
             font-weight: 500;
             font-size: 1.1rem;
+            position: relative;
+        }
+        
+        .name-highlight {
+            color: rgb(102, 128, 11);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .hover-photo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            top: 40px;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .hover-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .name-highlight:hover + .hover-photo,
+        .hover-photo:hover {
+            opacity: 1;
         }
         
         .site-title a {
@@ -209,7 +242,10 @@
 <body>
     <header>
         <div class="site-title">
-            <span>Max Kirkby</span>
+            <span class="name-highlight">Max Kirkby</span>
+            <div class="hover-photo">
+                <img src="images/personalweb.jpg" alt="Max Kirkby">
+            </div>
         </div>
         <nav>
             <a href="#">me</a>
