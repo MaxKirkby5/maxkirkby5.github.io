@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kirkby - Research</title>
+    <style>
+        :root {
+            --background-color: rgb(255, 252, 240);
+            --text-color: rgb(16, 15, 15);
+            --link-color: rgb(32, 94, 166);
+            --nav-color: #666666;
+            --nav-hover-color: rgb(32, 94, 166);
+        }
+        
+        [data-theme="dark"] {
+            --background-color: #1f2022;
+            --text-color: #e0e0e0;
+            --link-color: rgb(94, 151, 218);
+            --nav-color: #a0a0a0;
+            --nav-hover-color: rgb(94, 151, 218);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--nav-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+        
+        nav a.active {
+            color: var(--nav-hover-color);
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+        
+        .external-link::after {
+            content: "↗";
+            display: inline-block;
+            margin-left: 3px;
+        }
+        
+        ol, ul {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 1.5rem;
+        }
+        
+        .paper-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        
+        .paper-authors {
+            margin-bottom: 0.3rem;
+        }
+        
+        .paper-journal {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        [data-theme="dark"] .paper-journal {
+            color: #aaa;
+        }
+        
+        .download-link {
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+        
+        .paper-description {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            margin-left: 0.5rem;
+        }
+        
+        [data-theme="dark"] .paper-description {
+            color: #aaa;
+        }
+        
+        /* Theme toggle styling */
+        .theme-toggle-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+            margin-left: 10px;
+        }
+        
+        .theme-toggle {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transition: .4s;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .theme-toggle:checked + .toggle-slider {
+            background-color: #3a3a3a;
+        }
+        
+        .theme-toggle:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .site-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .resource-links {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-title">
+            <span>Max Kirkby</span>
+        </div>
+        <nav>
+            <a href="index.html">me</a>
+            <a href="research.html" class="active">research</a>
+            <a href="#">writing</a>
+            <label class="theme-toggle-wrapper">
+                <input type="checkbox" class="theme-toggle">
+                <span class="toggle-slider"></span>
+            </label>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Research</h1>
+        
+        <section>
+            <h2>Publications</h2>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://example.com/paper1">An introduction to reinforcement learning for neuroscience</a></h3>
+                <div class="paper-authors">Kristopher T. Jensen</div>
+                <div class="paper-journal">Neurons, Behavior, Data analysis, and Theory (2024)</div>
+                <a href="#" class="download-link">download pdf</a>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://example.com/paper2">Kinetic features dictate sensorimotor alignment in the superior colliculus</a></h3>
+                <div class="paper-authors">Ana González-Rueda, Kristopher T. Jensen, Mohammadreza Noormandipour, Daniel de Malmazet, Jonathan Wilson, Ernesto Ciabatti, Jisoo Kim, Elena Williams, Jasper Poort, Guillaume Hennequin, Marco Tripodi</div>
+                <div class="paper-journal">Nature (2024)</div>
+                <a href="#" class="download-link">download pdf</a>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://example.com/paper3">A recurrent network model of planning explains hippocampal replay and human behavior</a></h3>
+                <div class="paper-authors">Kristopher T. Jensen, Guillaume Hennequin*, Marcelo Mattar*</div>
+                <div class="paper-journal">Nature Neuroscience (2024)</div>
+                <a href="#" class="download-link">download pdf</a>
+            </article>
+        </section>
+        
+        <section>
+            <h2>First-author papers</h2>
+            <ul>
+                <li>
+                    <div class="paper-title">Disentangling Dense Embeddings with Sparse Autoencoders</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                        <a href="#" class="external-link">[GitHub]</a>
+                        <a href="#" class="external-link">[demo]</a>
+                    </div>
+                    <div class="paper-description">Sparse autoencoders for embeddings and steerable search. NeurIPS FM4S Oral</div>
+                </li>
+                
+                <li>
+                    <div class="paper-title">Searching for Bumps in the Cosmological Road: Do Type Ia Supernovae with Early Excesses Have Biased Hubble Residuals?</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                        <a href="#" class="external-link">[GitHub]</a>
+                    </div>
+                    <div class="paper-description">Precise measurement of systematics for our expanding universe. In ApJ</div>
+                </li>
+                
+                <li>
+                    <div class="paper-title">Inferring the neutron star maximum mass and lower mass gap in neutron star-black hole systems with spin</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                    </div>
+                    <div class="paper-description">Connecting fundamental astrophysics and gravitational wave populations. In ApJ</div>
+                </li>
+                
+                <li>
+                    <div class="paper-title">Cosmology with Standard Sirens at Cosmic Noon</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                    </div>
+                    <div class="paper-description">Simulating gravitational wave cosmology for the 2040s. In Phys. Rev. D</div>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Co-authored papers</h2>
+            <ul>
+                <li>
+                    <div class="paper-title">pathfinder: A Semantic Framework for Literature Review and Knowledge Discovery in Astronomy</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                        <a href="#" class="external-link">[pathfinder]</a>
+                    </div>
+                    <div class="paper-description">Semantic search (+ RAG, HyDE, ReAct, other acronyms) for scientific literature. In ApJS</div>
+                </li>
+                
+                <li>
+                    <div class="paper-title">SN2023ixf in Messier 101: the twilight years of the progenitor as seen by Pan-STARRS</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                    </div>
+                    <div class="paper-description">Real observations from an incredible telescope. In ApJ</div>
+                </li>
+                
+                <li>
+                    <div class="paper-title">The role of natal kicks in forming asymmetric compact binary mergers</div>
+                    <div class="resource-links">
+                        <a href="#" class="external-link">[arXiv]</a>
+                    </div>
+                    <div class="paper-description">Simulations to explain some unexpected LIGO observations. In ApJ</div>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Miscellaneous links</h2>
+            <ul>
+                <li>Curriculum training LMs for mathematical reasoning <a href="#" class="external-link">CS224N Paper</a></li>
+                <li><a href="#" class="external-link">Big Game 2023</a> x Stanford FashionX</li>
+                <li>Labs for science classrooms: <a href="#" class="external-link">Radioactive Decay Simulation</a> <a href="#" class="external-link">Hertzprung-Russell Diagram</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.checked = false;
+            }
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+        }
+        
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        setTheme(savedDarkMode);
+        
+        themeToggle.addEventListener('change', () => {
+            setTheme(themeToggle.checked);
+        });
+    </script>
+</body>
+</html>
