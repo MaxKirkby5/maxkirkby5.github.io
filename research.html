@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kirkby - Research</title>
+    <style>
+        :root {
+            --background-color: rgb(255, 252, 240);
+            --text-color: rgb(16, 15, 15);
+            --link-color: rgb(32, 94, 166);
+            --nav-color: #666666;
+            --nav-hover-color: rgb(32, 94, 166);
+        }
+        
+        [data-theme="dark"] {
+            --background-color: #1f2022;
+            --text-color: #e0e0e0;
+            --link-color: rgb(94, 151, 218);
+            --nav-color: #a0a0a0;
+            --nav-hover-color: rgb(94, 151, 218);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--nav-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+        
+        nav a.active {
+            color: var(--nav-hover-color);
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+        
+        .external-link::after {
+            content: "↗";
+            display: inline-block;
+            margin-left: 3px;
+        }
+        
+        ol, ul {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 1.5rem;
+        }
+        
+        .paper-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        
+        .paper-authors {
+            margin-bottom: 0.3rem;
+        }
+        
+        .paper-journal {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        [data-theme="dark"] .paper-journal {
+            color: #aaa;
+        }
+        
+        .download-link {
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+        
+        .paper-description {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            margin-left: 0.5rem;
+        }
+        
+        [data-theme="dark"] .paper-description {
+            color: #aaa;
+        }
+        
+        /* Theme toggle styling */
+        .theme-toggle-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+            margin-left: 10px;
+        }
+        
+        .theme-toggle {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transition: .4s;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .theme-toggle:checked + .toggle-slider {
+            background-color: #3a3a3a;
+        }
+        
+        .theme-toggle:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .site-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .resource-links {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-title">
+            <span>Max Kirkby</span>
+        </div>
+        <nav>
+            <a href="index.html">me</a>
+            <a href="research.html" class="active">research</a>
+            <a href="#">writing</a>
+            <label class="theme-toggle-wrapper">
+                <input type="checkbox" class="theme-toggle">
+                <span class="toggle-slider"></span>
+            </label>
+        </nav>
+    </header>
+
+    <main>       
+        <section>
+            <h2>Primary</h2>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="">Resurrecting the Salmon: Rethinking
+                    Mechanistic Interpretability with
+                    Domain-Specific Sparse Autoencoders</a></h3>
+                <div class="paper-authors">O'Neill, Kirkby and Jayasekara</div>
+                <div class="paper-journal">Parsed AI (2025)</div>
+            </article>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">Guanylate-binding proteins: mechanisms of pattern recognition and antimicrobial functions</a></h3>
+                <div class="paper-authors">Kirkby et al.</div>
+                <div class="paper-journal">Trends in Biochemical Sciences (2023)</div>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://www.cell.com/cell-host-microbe/fulltext/S1931-3128(22)00133-0">Streptococcus makes the cut: Gasdermin A-induced pyroptosis
+                </a></h3>
+                <div class="paper-authors">Zhao, Kirkby and Man</div>
+                <div class="paper-journal">Cell Host & Microbe Immunology (2022)</div>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/ceo.14023">Running to save sight: The effects of exercise on retinal health and function
+                </a></h3>
+                <div class="paper-authors">Chu-Tan, Kirkby and Natoli</div>
+                <div class="paper-journal">Clinical & Experimental Ophthalmology (2021)</div>
+            </article>
+        
+        <section>
+            <h2>Co-Authored</h2>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://pubmed.ncbi.nlm.nih.gov/39594256/#:~:text=Methods%3A%204DCarE%20(4D%2Dflow,(45%2D60%20min).">Four-Dimensional Flow MRI for Cardiovascular Evaluation
+                    (4DCarE): A Prospective Non-Inferiority Study of a Rapid
+                    Cardiac MRI Exam: Study Protocol and Pilot Analysis</a></h3>
+                <div class="paper-authors">Qin et al.</div>
+                <div class="paper-journal">Diagnostics (2024)</div>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://www.nature.com/articles/s41590-024-01988-6">Inflammasome protein scaffolds the DNA damage complex during tumor development</a></h3>
+                <div class="paper-authors">Shen et al.</div>
+                <div class="paper-journal">Nature Immunology (2024)</div>
+            </article>
+            
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://www.embopress.org/doi/full/10.15252/embj.2022112558">Immunity against Moraxella catarrhalis requires guanylate‐binding proteins and caspase‐11‐NLRP3 inflammasomes</a></h3>
+                <div class="paper-authors">Enosi-Tuipulotu et al.</div>
+                <div class="paper-journal">EMBO Journal (2023)</div>
+            </article>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">Voluntary exercise modulates pathways associated with amelioration of retinal degenerative diseases</a></h3>
+                <div class="paper-authors">Chu-Tan et al.</div>
+                <div class="paper-journal">Frontiers in Physiology (2023)</div>
+            </article>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/imr.12906">Molecular mechanisms activating the NAIP‐NLRC4 inflammasome: implications in infectious disease, autoinflammation, and cancer</a></h3>
+                <div class="paper-authors">Kay et al.</div>
+                <div class="paper-journal">Immunological Reviews (2020)</div>
+            </article>
+        </section>
+
+        <section>
+            <h2>Conference Proceedings</h2>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://rldm.org/">A spatial navigation paradigm for investigating hierarchical
+                    planning</a></h3>
+                <div class="paper-authors">Kirkby et al.</div>
+                <div class="paper-journal">Reinforcement Learning and Decision Making (RLDM) (2025)</div>
+            </article>
+
+            <article class="paper">
+                <h3 class="paper-title"><a href="https://symposium.mndassociation.org/wp-content/uploads/2023/11/LOW-RES-FOR-WEBSITE-FINAL.pdf">Multi-modal detection of changes
+                    in MND for the quantitative evaluation
+                    of response to 3K3A-APC treatment</a></h3>
+                <div class="paper-authors">Kirkby et al.</div>
+                <div class="paper-journal">34th International Symposium on ALS/MND (2023)</div>
+            </article>
+            
+        </section>
+    </main>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.checked = false;
+            }
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+        }
+        
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        setTheme(savedDarkMode);
+        
+        themeToggle.addEventListener('change', () => {
+            setTheme(themeToggle.checked);
+        });
+    </script>
+</body>
+</html>
