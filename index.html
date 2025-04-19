@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kirkby</title>
+    <style>
+        :root {
+            --background-color: rgb(255, 252, 240);
+            --text-color: rgb(16, 15, 15);
+            --link-color: rgb(32, 94, 166);
+            --nav-color: #666666;
+            --nav-hover-color: rgb(32, 94, 166);
+        }
+        
+        [data-theme="dark"] {
+            --background-color: #1f2022;
+            --text-color: #e0e0e0;
+            --link-color: rgb(94, 151, 218);
+            --nav-color: #a0a0a0;
+            --nav-hover-color: rgb(94, 151, 218);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--nav-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--nav-hover-color);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+        
+        .external-link::after {
+            content: "↗";
+            display: inline-block;
+            margin-left: 3px;
+        }
+        
+        ol {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Simplified toggle switch styling */
+        .theme-toggle-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+            margin-left: 10px;
+        }
+        
+        .theme-toggle {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transition: .4s;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        /* Dark mode */
+        .theme-toggle:checked + .toggle-slider {
+            background-color: #3a3a3a;
+        }
+        
+        .theme-toggle:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .site-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .name-highlight {
+            color: rgb(102, 128, 11);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .hover-photo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            top: 30px;
+            left: -20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .hover-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .name-highlight:hover + .hover-photo,
+        .hover-photo:hover {
+            opacity: 1;
+        }
+        
+        .site-title a {
+            text-decoration: none;
+        }
+        
+        .projects {
+            color: #4a7a9d;
+        }
+        
+        .content-wrapper {
+            margin-top: 40px;
+        }
+        
+        .profile-photo {
+            display: none;
+        }
+        
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .bio-content h2 {
+            margin-top: 0;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding: 0;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            margin-top: 20px;
+            padding-left: 0;
+        }
+        
+        .social-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: opacity 0.2s ease;
+        }
+        
+        .social-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-title">
+            <span>Max Kirkby</span>
+        </div>
+        <nav>
+            <a href="#" class="active">me</a>
+            <a href="research.html">research</a>
+            <a href="#">writing</a>
+            <label class="theme-toggle-wrapper">
+                <input type="checkbox" class="theme-toggle">
+                <span class="toggle-slider"></span>
+            </label>
+        </nav>
+    </header>
+
+    <main>        
+        <div class="bio-content">
+            <h2>me</h2>
+            <p>Hi, I'm <span class="name-highlight">Max Kirkby</span><span class="hover-photo"><img src="images/personalweb.jpg" alt="Max Kirkby"></span>. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia.</p>
+            
+            <p>
+                My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London. I'll first present this work at <a href="https://rldm.org/">RLDM 2025</a> in Dublin. 
+            </p>
+
+            <p>Outside of research, I co-founded <a href="https://rake.news/">Rake News</a>,
+                a P2P news platform using LLMs for information debiasing. Rake evolved 
+                to provide enterprise-grade RAG to organisations in Australia and the US. 
+                I recently co-founded <a href="https://parsed.com/">Parsed</a>, a startup that uses mechanistic interpretability to build safer medical AI.          
+            </p>
+
+            <p>
+                In a past life I was a <a href="https://tuckwell.anu.edu.au/about/scholarship">Tuckwell Scholar</a> at the ANU, where I completed a Bachelor of Philosophy (Science) in biology, neuroscience and mathematics. 
+                My undergraduate included research across <a href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">innate immunology</a>, 
+                <a href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">neurodegeneration</a> and 
+                <a href="https://www.mdpi.com/2075-4418/14/22/2590">cardiology</a> at the University of Sydney, ANU, and the Walter and Eliza Hall Institute.
+            </p>
+
+            <p>
+                You can find me via email at maxkirkby1 [at] gmail [dot] com.
+            </p>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/max-kirkby15/" class="social-link">LinkedIn</a>
+                <a href="https://github.com/MaxKirkby5" class="social-link">GitHub</a>
+                <a href="https://x.com/kirkby_max" class="social-link">Twitter/X</a>
+                <a href="https://scholar.google.com/citations?user=SoMPEoIAAAAJ&hl=en" class="social-link">Google Scholar</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.checked = false;
+            }
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+        }
+        
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        setTheme(savedDarkMode);
+        
+        themeToggle.addEventListener('change', () => {
+            setTheme(themeToggle.checked);
+        });
+    </script>
+</body>
+</html>
