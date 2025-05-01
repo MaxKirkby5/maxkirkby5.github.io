@@ -238,79 +238,89 @@
         /* Puzzle Styles */
         .email-puzzle {
             margin-top: 20px;
-            padding: 15px;
+            padding: 10px;
             border: 1px solid var(--nav-color);
             border-radius: 8px;
             background-color: var(--background-color); /* Match body background */
+            text-align: center; /* Center align content like instructions/feedback */
         }
 
         .puzzle-instructions {
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* Reduce margin */
             font-size: 1rem;
         }
-
-        .graph-container {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            position: relative; /* For connecting lines */
+        
+        /* New SVG Graph Styles */
+        #graph {
+            width: 100%;
+            max-width: 400px; /* Limit max size */
+            height: auto;
+            margin-bottom: 10px; /* Reduce margin */
+            display: block; /* Prevents extra space below */
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .graph-node {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--nav-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+        .node circle {
+            fill: var(--background-color);
+            stroke: var(--nav-color);
+            stroke-width: 2px;
+            transition: fill 0.3s ease, stroke 0.3s ease;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            background-color: var(--background-color); /* Ensure background matches */
-            color: var(--text-color); /* Ensure text color matches */
-            z-index: 1; /* Keep nodes above lines */
-        }
-
-        .graph-node:hover {
-            border-color: var(--nav-hover-color);
-        }
-
-        .graph-node.selected {
-            background-color: var(--nav-hover-color);
-            color: var(--background-color);
         }
         
-        /* Simple line between A and C */
-        .line-ac {
-            position: absolute;
-            left: calc(50% - 30px / 2 - 15px); /* Center between A and C */
-            top: 20px; /* Vertically center */
-            width: 30px; /* Gap between nodes */
-            height: 2px;
-            background-color: var(--nav-color);
-            z-index: 0;
-        }
-        
-        /* Simple line between C and B */
-         .line-cb {
-            position: absolute;
-            left: calc(50% + 30px / 2 + 15px); /* Center between C and B */
-            top: 20px; /* Vertically center */
-            width: 30px; /* Gap between nodes */
-            height: 2px;
-            background-color: var(--nav-color);
-            z-index: 0;
+        .node text {
+            fill: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none; /* Text shouldn't capture clicks */
+            transition: fill 0.3s ease;
         }
 
+        .node:hover circle {
+             stroke: var(--nav-hover-color);
+        }
+        
+        .node.selected circle {
+            fill: var(--nav-hover-color);
+            stroke: var(--nav-hover-color);
+        }
+
+         .node.selected text {
+            fill: var(--background-color);
+        }
+
+        .edge {
+            stroke: var(--nav-color);
+            stroke-width: 2px;
+            transition: stroke 0.3s ease;
+        }
+        
+        .edge.selected {
+            stroke: var(--nav-hover-color);
+            stroke-width: 3px; /* Make selected edges slightly thicker */
+        }
+
+        .edge-label {
+            fill: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+             transition: fill 0.3s ease;
+        }
 
         .puzzle-feedback {
             min-height: 20px; /* Reserve space */
             font-size: 0.9rem;
             text-align: center;
             color: var(--link-color);
+            /* Make it live region for screen readers */
+            /* Attributes will be set in JS */
         }
         
         .revealed-email {
@@ -359,23 +369,13 @@
                 <a href="https://www.mdpi.com/2075-4418/14/22/2590">cardiology</a> at the University of Sydney, ANU, and the Walter and Eliza Hall Institute.
             </p>
 
-            <!-- Remove direct email link -->
-            <!-- <p>
-                You can find me via email at maxkirkby1 [at] gmail [dot] com.
-            </p> -->
-            
-            <!-- Add Email Puzzle Section -->
+            <!-- Replace Email Puzzle Section -->
             <div class="email-puzzle" id="emailPuzzleContainer">
-                <p class="puzzle-instructions">To see my email, click the nodes in the correct sequence: A → C → B</p>
-                <div class="graph-container">
-                     <!-- Add simple lines -->
-                    <div class="line-ac"></div>
-                    <div class="line-cb"></div>
-                    <div class="graph-node" id="nodeA">A</div>
-                    <div class="graph-node" id="nodeC">C</div>
-                    <div class="graph-node" id="nodeB">B</div>
-                </div>
-                <div class="puzzle-feedback" id="puzzleFeedback"></div>
+                 <p class="puzzle-instructions">
+                    Find the minimum-cost path from <strong>S</strong> to <strong>T</strong>. Click the nodes in sequence.
+                 </p>
+                 <svg id="graph" viewBox="0 0 400 300" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
+                 <div id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></div>
             </div>
 
             <div class="social-links">
@@ -409,54 +409,213 @@
             setTheme(themeToggle.checked);
         });
         
-        // Email Puzzle Logic
-        const puzzleContainer = document.getElementById('emailPuzzleContainer');
-        const nodes = {
-            A: document.getElementById('nodeA'),
-            C: document.getElementById('nodeC'),
-            B: document.getElementById('nodeB')
+        // --- New Shortest Path Puzzle Logic ---
+        const svgNS = "http://www.w3.org/2000/svg";
+        const graphSvg = document.getElementById('graph');
+        const feedbackEl = document.getElementById('puzzleFeedback');
+        const puzzleContainerEl = document.getElementById('emailPuzzleContainer'); // Get container for reveal
+
+        const graphData = {
+            nodes: {
+                S: { x: 50, y: 150, label: "S" },
+                A: { x: 150, y: 50, label: "A" },
+                B: { x: 150, y: 250, label: "B" },
+                C: { x: 250, y: 50, label: "C" },
+                D: { x: 250, y: 250, label: "D" },
+                T: { x: 350, y: 150, label: "T" }
+            },
+            edges: [
+                { from: 'S', to: 'A', weight: 2 },
+                { from: 'S', to: 'B', weight: 5 },
+                { from: 'S', to: 'D', weight: 6 }, // Updated weight
+                { from: 'A', to: 'C', weight: 2 },
+                { from: 'B', to: 'D', weight: 1 },
+                { from: 'C', to: 'T', weight: 3 },
+                { from: 'D', to: 'T', weight: 2 }
+            ],
+            // Adjacency list for easier lookup during interaction
+            adjacency: {
+                S: { A: 2, B: 5, D: 6 },
+                A: { S: 2, C: 2 },
+                B: { S: 5, D: 1 },
+                C: { A: 2, T: 3 },
+                D: { S: 6, B: 1, T: 2 }, // Include S for completeness, T included
+                T: { C: 3, D: 2 }       // T is endpoint, technically no outgoing needed for puzzle
+            },
+            minCost: 7,
+            startNode: 'S',
+            endNode: 'T'
         };
-        const feedbackElement = document.getElementById('puzzleFeedback');
-        const correctSequence = ['A', 'C', 'B'];
-        let userSequence = [];
+
+        let userPath = [graphData.startNode];
+        let runningCost = 0;
+        let elements = { nodes: {}, edges: {} }; // Store SVG elements
+
+        function drawGraph() {
+            graphSvg.innerHTML = ''; // Clear previous graph if any
+            elements = { nodes: {}, edges: {} }; // Reset elements store
+            userPath = [graphData.startNode];
+            runningCost = 0;
+
+            // Draw Edges (draw first so they are behind nodes)
+            graphData.edges.forEach(edge => {
+                const n1 = graphData.nodes[edge.from];
+                const n2 = graphData.nodes[edge.to];
+                
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', n1.x);
+                line.setAttribute('y1', n1.y);
+                line.setAttribute('x2', n2.x);
+                line.setAttribute('y2', n2.y);
+                line.classList.add('edge');
+                // Store edge elements keyed by node pairs (e.g., 'S-A' and 'A-S')
+                const edgeKey1 = `${edge.from}-${edge.to}`;
+                const edgeKey2 = `${edge.to}-${edge.from}`;
+                elements.edges[edgeKey1] = line;
+                elements.edges[edgeKey2] = line; 
+                graphSvg.appendChild(line);
+
+                // Add Edge Label (Weight)
+                const midX = (n1.x + n2.x) / 2;
+                const midY = (n1.y + n2.y) / 2;
+                 // Calculate offset perpendicular to the line
+                const angle = Math.atan2(n2.y - n1.y, n2.x - n1.x);
+                const offsetX = Math.sin(angle) * 10; // Adjust offset distance (10)
+                const offsetY = -Math.cos(angle) * 10;
+
+                const label = document.createElementNS(svgNS, 'text');
+                label.setAttribute('x', midX + offsetX);
+                label.setAttribute('y', midY + offsetY);
+                label.classList.add('edge-label');
+                label.textContent = edge.weight;
+                graphSvg.appendChild(label);
+            });
+            
+             // Draw Nodes
+            Object.entries(graphData.nodes).forEach(([id, node]) => {
+                const g = document.createElementNS(svgNS, 'g');
+                g.classList.add('node');
+                g.setAttribute('id', `svg-node-${id}`);
+                g.setAttribute('role', 'button');
+                g.setAttribute('tabindex', '0');
+                
+                // Build aria-label
+                let ariaLabel = `Node ${id}.`;
+                if (graphData.adjacency[id]) {
+                     ariaLabel += " Connects to: ";
+                     ariaLabel += Object.entries(graphData.adjacency[id])
+                                      .map(([neighbor, weight]) => `${neighbor} (cost ${weight})`)
+                                      .join(', ');
+                }
+                 g.setAttribute('aria-label', ariaLabel);
+
+
+                const circle = document.createElementNS(svgNS, 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', 15); // Node radius
+                g.appendChild(circle);
+
+                const text = document.createElementNS(svgNS, 'text');
+                text.setAttribute('x', node.x);
+                text.setAttribute('y', node.y);
+                text.textContent = node.label;
+                g.appendChild(text);
+
+                elements.nodes[id] = g; // Store the group element
+                
+                g.addEventListener('click', () => onNodeClick(id));
+                g.addEventListener('keydown', (event) => {
+                     if (event.key === 'Enter' || event.key === ' ') {
+                         onNodeClick(id);
+                     }
+                 });
+
+                graphSvg.appendChild(g);
+            });
+            
+             // Highlight start node initially
+            highlightNode(graphData.startNode);
+            updateFeedback(); // Initial feedback
+        }
+
+        function highlightNode(nodeId) {
+            if (elements.nodes[nodeId]) {
+                elements.nodes[nodeId].classList.add('selected');
+            }
+        }
+        
+        function highlightEdge(nodeId1, nodeId2) {
+             const edgeKey = `${nodeId1}-${nodeId2}`;
+             if (elements.edges[edgeKey]) {
+                elements.edges[edgeKey].classList.add('selected');
+             }
+        }
+
+         function updateFeedback() {
+            let pathStr = userPath.join(' → ');
+            if (userPath.length > 1) {
+                 feedbackEl.textContent = `Path: ${pathStr} (Cost: ${runningCost})`;
+            } else {
+                feedbackEl.textContent = 'Click the next node in the path.';
+            }
+         }
+
+        function onNodeClick(nodeId) {
+            const previousNode = userPath[userPath.length - 1];
+
+            // Ignore clicks on already visited nodes or non-adjacent nodes
+            if (userPath.includes(nodeId) || !graphData.adjacency[previousNode]?.[nodeId]) {
+                // Maybe add subtle feedback for invalid clicks? (Optional)
+                return; 
+            }
+            
+            const cost = graphData.adjacency[previousNode][nodeId];
+            runningCost += cost;
+            userPath.push(nodeId);
+            
+            highlightNode(nodeId);
+            highlightEdge(previousNode, nodeId);
+            updateFeedback();
+
+            if (nodeId === graphData.endNode) {
+                checkSolution();
+            }
+        }
+
+        function checkSolution() {
+             // Small delay for user to see the final path/cost
+             setTimeout(() => {
+                  if (runningCost === graphData.minCost && userPath[0] === graphData.startNode) {
+                    showSuccess();
+                  } else {
+                    const message = `Path cost ${runningCost}. The minimum cost is ${graphData.minCost}. Try again.`;
+                    showError(message);
+                    setTimeout(resetPuzzle, 1500); // Longer delay for error message
+                  }
+             }, 300);
+        }
+        
+        function showSuccess() {
+             feedbackEl.textContent = 'Correct! Revealing email...';
+              // Replace puzzle content with email
+              setTimeout(() => {
+                   puzzleContainerEl.innerHTML = '<p class="revealed-email">maxkirkby1 [at] gmail [dot] com</p>';
+              }, 500); // Delay reveal slightly
+        }
+
+        function showError(message) {
+             feedbackEl.textContent = message;
+             // Could add a visual cue like shaking the container (optional)
+        }
 
         function resetPuzzle() {
-            userSequence = [];
-            Object.values(nodes).forEach(node => node.classList.remove('selected'));
-            feedbackElement.textContent = '';
+             drawGraph(); // Redrawing resets highlights, state, and feedback
         }
 
-        function revealEmail() {
-            puzzleContainer.innerHTML = '<p class="revealed-email">maxkirkby1 [at] gmail [dot] com</p>';
-        }
+        // Initial draw
+        drawGraph();
 
-        Object.entries(nodes).forEach(([key, nodeElement]) => {
-            if (nodeElement) { // Check if element exists
-                nodeElement.addEventListener('click', () => {
-                    // Prevent adding duplicates or clicking after completion
-                    if (userSequence.includes(key) || userSequence.length === correctSequence.length) {
-                        return; 
-                    }
-
-                    nodeElement.classList.add('selected');
-                    userSequence.push(key);
-                    feedbackElement.textContent = `Sequence: ${userSequence.join(' → ')}`;
-
-                    // Check if current node is correct in sequence so far
-                    if (userSequence[userSequence.length - 1] !== correctSequence[userSequence.length - 1]) {
-                        feedbackElement.textContent = 'Incorrect sequence. Try again.';
-                        // Reset after a short delay
-                        setTimeout(resetPuzzle, 1000);
-                    } else if (userSequence.length === correctSequence.length) {
-                        // Correct sequence completed
-                        feedbackElement.textContent = 'Correct! Revealing email...';
-                        setTimeout(revealEmail, 500);
-                    }
-                });
-            } else {
-                console.error(`Puzzle node element not found for key: ${key}`);
-            }
-        });
     </script>
 </body>
 </html>
