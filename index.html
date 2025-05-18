@@ -181,9 +181,10 @@
             object-fit: cover;
         }
         
-        .name-highlight:hover + .hover-photo,
-        .hover-photo:hover {
+        .name-highlight:hover > .hover-photo,
+        .name-highlight > .hover-photo:hover {
             opacity: 1;
+            pointer-events: auto;
         }
         
         .site-title a {
@@ -350,7 +351,7 @@
     <main>        
         <div class="bio-content">
             <h2>me</h2>
-            <p>Hi, I'm <span class="name-highlight">Max Kirkby</span><span class="hover-photo"><img src="images/personalweb.jpg" alt="Max Kirkby"></span>. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia.</p>
+            <p>Hi, I'm <span class="name-highlight">Max Kirkby<span class="hover-photo"><img src="images/personalweb.jpg" alt="Max Kirkby"></span></span>. I'm a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford, studying for a PhD in Computational Neuroscience. I'm originally from Adelaide, South Australia.</p>
             
             <p>
                 My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London. I'll first present this work at <a href="https://rldm.org/">RLDM 2025</a> in Dublin. 
