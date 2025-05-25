@@ -238,35 +238,38 @@
         
         /* Puzzle Styles */
         .email-puzzle {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid var(--nav-color);
-            border-radius: 8px;
-            background-color: var(--background-color); /* Match body background */
-            text-align: center; /* Center align content like instructions/feedback */
+            margin-top: 15px;
+            padding: 0;
+            text-align: left;
         }
 
-        .puzzle-title { /* New style for the title */
-            font-size: 1.2rem;
-            font-weight: 600;
+        .puzzle-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
             margin-bottom: 8px;
+        }
+
+        .puzzle-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
             color: var(--text-color);
         }
 
         .puzzle-instructions {
-            margin-bottom: 10px; /* Reduce margin */
-            font-size: 1rem;
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--nav-color);
         }
         
         /* New SVG Graph Styles */
         #graph {
             width: 100%;
-            max-width: 300px; /* Limit max size - Reduced from 400px */
+            max-width: 240px;
             height: auto;
-            margin-bottom: 10px; /* Reduce margin */
-            display: block; /* Prevents extra space below */
-            margin-left: auto;
-            margin-right: auto;
+            margin: 8px 0 6px 0;
+            display: block;
         }
 
         .node circle {
@@ -323,19 +326,19 @@
         }
 
         .puzzle-feedback {
-            min-height: 20px; /* Reserve space */
+            min-height: 18px;
             font-size: 0.9rem;
-            text-align: center;
+            text-align: left;
             color: var(--link-color);
-            /* Make it live region for screen readers */
-            /* Attributes will be set in JS */
+            margin-top: 4px;
         }
         
         .revealed-email {
              font-size: 1rem;
-             font-family: monospace; /* Optional: make it look code-like */
+             font-family: monospace;
              color: var(--link-color);
-             text-align: center;
+             text-align: left;
+             margin-top: 4px;
         }
     </style>
 </head>
@@ -379,12 +382,12 @@
 
             <!-- Replace Email Puzzle Section -->
             <div class="email-puzzle" id="emailPuzzleContainer">
-                 <h4 class="puzzle-title">Solve for Email</h4> <!-- Added Title -->
-                 <p class="puzzle-instructions">
-                    Find the minimum-cost path from <strong>S</strong> to <strong>T</strong>. Click the nodes in sequence.
-                 </p>
-                 <svg id="graph" viewBox="0 0 300 225" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg> <!-- Adjusted viewBox -->
-                 <div id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></div>
+                <div class="puzzle-header">
+                    <h4 class="puzzle-title">Solve for Email</h4>
+                    <p class="puzzle-instructions">Find the minimum-cost path from <strong>S</strong> to <strong>T</strong>. Click the nodes in sequence.</p>
+                </div>
+                <svg id="graph" viewBox="0 0 300 180" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
+                <div id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></div>
             </div>
 
             <div class="social-links">
@@ -425,13 +428,13 @@
         const puzzleContainerEl = document.getElementById('emailPuzzleContainer'); // Get container for reveal
 
         const graphData = {
-            nodes: { // Coordinates scaled by 0.75
-                S: { x: 37.5, y: 112.5, label: "S" },
-                A: { x: 112.5, y: 37.5, label: "A" },
-                B: { x: 112.5, y: 187.5, label: "B" },
-                C: { x: 187.5, y: 37.5, label: "C" },
-                D: { x: 187.5, y: 187.5, label: "D" },
-                T: { x: 262.5, y: 112.5, label: "T" }
+            nodes: { // Coordinates adjusted for compact 300x180 viewBox
+                S: { x: 37.5, y: 90, label: "S" },
+                A: { x: 112.5, y: 30, label: "A" },
+                B: { x: 112.5, y: 150, label: "B" },
+                C: { x: 187.5, y: 30, label: "C" },
+                D: { x: 187.5, y: 150, label: "D" },
+                T: { x: 262.5, y: 90, label: "T" }
             },
             edges: [
                 { from: 'S', to: 'A', weight: 2 },
@@ -489,8 +492,8 @@
                 const midY = (n1.y + n2.y) / 2;
                  // Calculate offset perpendicular to the line
                 const angle = Math.atan2(n2.y - n1.y, n2.x - n1.x);
-                const offsetX = Math.sin(angle) * 8; // Adjust offset distance (10 -> 8)
-                const offsetY = -Math.cos(angle) * 8;
+                const offsetX = Math.sin(angle) * 6;
+                const offsetY = -Math.cos(angle) * 6;
 
                 const label = document.createElementNS(svgNS, 'text');
                 label.setAttribute('x', midX + offsetX);
@@ -522,7 +525,7 @@
                 const circle = document.createElementNS(svgNS, 'circle');
                 circle.setAttribute('cx', node.x);
                 circle.setAttribute('cy', node.y);
-                circle.setAttribute('r', 11); // Node radius (15 -> 11)
+                circle.setAttribute('r', 9);
                 g.appendChild(circle);
 
                 const text = document.createElementNS(svgNS, 'text');
