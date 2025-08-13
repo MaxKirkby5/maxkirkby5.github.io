@@ -12,6 +12,15 @@
             --link-color: rgb(32, 94, 166);
             --nav-color: #666666;
             --nav-hover-color: rgb(32, 94, 166);
+            /* Cluster palette */
+            --cluster-1: rgb(175, 48, 41);
+            --cluster-2: rgb(188, 82, 21);
+            --cluster-3: rgb(173, 131, 1);
+            --cluster-4: rgb(102, 128, 11);
+            --cluster-5: rgb(36, 131, 123);
+            --cluster-6: rgb(32, 94, 166);
+            --cluster-7: rgb(94, 64, 157);
+            --cluster-8: rgb(160, 47, 111);
         }
         
         [data-theme="dark"] {
@@ -228,6 +237,58 @@
             display: inline-block;
             margin-left: 0.5rem;
         }
+
+        /* Papers map */
+        .papers-map {
+            margin-top: -10px;
+            margin-bottom: 28px;
+        }
+        .papers-map svg {
+            width: 100%;
+            height: 160px;
+            display: block;
+        }
+        .papers-map .subtitle {
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+            color: var(--nav-color);
+        }
+        .cluster-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .cluster-legend .item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--nav-color);
+            cursor: default;
+            user-select: none;
+        }
+        .cluster-legend .swatch {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .cluster-legend .swatch {
+            border-color: rgba(255,255,255,0.15);
+        }
+        .papers-list li {
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+        .papers-list li.pulse {
+            animation: pulse-border 1.2s ease 1;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(50, 50, 50, 0.0); }
+            40% { box-shadow: 0 0 0 8px rgba(50, 50, 50, 0.08); }
+            100% { box-shadow: 0 0 0 0 rgba(50, 50, 50, 0.0); }
+        }
     </style>
 </head>
 <body>
@@ -247,6 +308,11 @@
     </header>
 
     <main>       
+        <section class="papers-map" aria-label="Papers similarity map">
+            <div class="subtitle">Papers map (computed similarity)</div>
+            <svg id="papers-map-svg" viewBox="0 0 800 160" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Graph of paper similarities"></svg>
+            <div class="cluster-legend" id="cluster-legend" aria-hidden="true" style="display:none"></div>
+        </section>
         <section>
             <h2>Primary</h2>
             <ul class="papers-list">
@@ -344,6 +410,330 @@
         themeToggle.addEventListener('change', () => {
             setTheme(themeToggle.checked);
         });
+
+        // ---------- Papers similarity map ----------
+        (function() {
+            const svg = document.getElementById('papers-map-svg');
+            if (!svg) return;
+
+            // Collect papers from DOM
+            const paperLinkSelector = '.papers-list li > a.title';
+            const linkNodes = Array.from(document.querySelectorAll(paperLinkSelector));
+            const papers = linkNodes.map((a, idx) => {
+                const title = a.textContent.trim().replace(/\s+/g, ' ');
+                return {
+                    id: 'p' + idx,
+                    title,
+                    year: extractYearFromLi(a.closest('li')),
+                    li: a.closest('li'),
+                    a
+                };
+            });
+
+            if (papers.length === 0) return;
+
+            // Build TF-IDF vectors from titles
+            const tokensList = papers.map(p => tokenize(p.title));
+            const df = new Map();
+            tokensList.forEach(tokens => {
+                const unique = new Set(tokens);
+                unique.forEach(t => df.set(t, (df.get(t) || 0) + 1));
+            });
+            const N = papers.length;
+            const idf = new Map();
+            df.forEach((docFreq, term) => {
+                idf.set(term, Math.log((N + 1) / (docFreq + 1)) + 1);
+            });
+            const vectors = tokensList.map(tokens => {
+                const tf = new Map();
+                tokens.forEach(t => tf.set(t, (tf.get(t) || 0) + 1));
+                // log-scaled tf
+                tf.forEach((count, term) => tf.set(term, 1 + Math.log(count)));
+                // build sparse vector
+                const v = new Map();
+                tf.forEach((tfVal, term) => {
+                    const idfVal = idf.get(term) || 0;
+                    v.set(term, tfVal * idfVal);
+                });
+                return v;
+            });
+
+            function dot(a, b) {
+                let s = 0;
+                if (a.size < b.size) {
+                    a.forEach((va, k) => { const vb = b.get(k); if (vb) s += va * vb; });
+                } else {
+                    b.forEach((vb, k) => { const va = a.get(k); if (va) s += va * vb; });
+                }
+                return s;
+            }
+            function norm(a) {
+                let s = 0; a.forEach(v => s += v * v); return Math.sqrt(s) || 1;
+            }
+            const norms = vectors.map(norm);
+
+            // Build kNN similarity graph (k=3 by default, capped by N-1)
+            const k = Math.max(1, Math.min(3, N - 1));
+            const edges = [];
+            const edgeSet = new Set();
+            for (let i = 0; i < N; i++) {
+                const sims = [];
+                for (let j = 0; j < N; j++) if (i !== j) {
+                    const s = dot(vectors[i], vectors[j]) / (norms[i] * norms[j]);
+                    sims.push({ j, s });
+                }
+                sims.sort((a, b) => b.s - a.s);
+                for (let t = 0; t < Math.min(k, sims.length); t++) {
+                    const j = sims[t].j;
+                    const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+                    if (edgeSet.has(key)) continue;
+                    edgeSet.add(key);
+                    edges.push({ source: i, target: j, weight: Math.max(0, sims[t].s) });
+                }
+            }
+
+            // Simple force-directed layout (Fruchterman-Reingold style, few iters for speed)
+            const width = 800, height = 160;
+            const nodes = papers.map((p, i) => ({
+                idx: i,
+                id: p.id,
+                x: (i + 0.5) * (width / N) + (Math.random() - 0.5) * 20,
+                y: height / 2 + (Math.random() - 0.5) * 20,
+                vx: 0, vy: 0
+            }));
+            const idealLen = 60;
+            const repulse = 1200;
+            const damping = 0.85;
+            for (let iter = 0; iter < 100; iter++) {
+                // repulsion
+                for (let i = 0; i < N; i++) {
+                    for (let j = i + 1; j < N; j++) {
+                        let dx = nodes[i].x - nodes[j].x;
+                        let dy = nodes[i].y - nodes[j].y;
+                        let dist2 = dx*dx + dy*dy + 0.01;
+                        let f = repulse / dist2;
+                        let invDist = 1 / Math.sqrt(dist2);
+                        dx *= invDist; dy *= invDist;
+                        nodes[i].vx += dx * f; nodes[i].vy += dy * f;
+                        nodes[j].vx -= dx * f; nodes[j].vy -= dy * f;
+                    }
+                }
+                // attraction along edges
+                edges.forEach(e => {
+                    const a = nodes[e.source], b = nodes[e.target];
+                    let dx = b.x - a.x; let dy = b.y - a.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy) || 0.001;
+                    const desired = idealLen * (1 - e.weight * 0.4);
+                    const kspring = 0.01;
+                    const f = kspring * (dist - desired);
+                    dx /= dist; dy /= dist;
+                    a.vx += dx * f; a.vy += dy * f;
+                    b.vx -= dx * f; b.vy -= dy * f;
+                });
+                // integrate
+                for (let i = 0; i < N; i++) {
+                    nodes[i].x += nodes[i].vx;
+                    nodes[i].y += nodes[i].vy;
+                    nodes[i].vx *= damping;
+                    nodes[i].vy *= damping;
+                    // bounds
+                    nodes[i].x = Math.max(10, Math.min(width - 10, nodes[i].x));
+                    nodes[i].y = Math.max(10, Math.min(height - 10, nodes[i].y));
+                }
+            }
+
+            // Build weighted adjacency for label propagation clustering
+            const neighbors = Array.from({ length: N }, () => new Map());
+            edges.forEach(e => {
+                neighbors[e.source].set(e.target, (neighbors[e.source].get(e.target) || 0) + e.weight);
+                neighbors[e.target].set(e.source, (neighbors[e.target].get(e.source) || 0) + e.weight);
+            });
+            // initialize labels as own index
+            const labels = Array.from({ length: N }, (_, i) => i);
+            for (let it = 0; it < 20; it++) {
+                let changed = 0;
+                // update order shuffled each iteration to reduce bias
+                const order = Array.from({ length: N }, (_, i) => i);
+                for (let i = N - 1; i > 0; i--) {
+                    const r = Math.floor(Math.random() * (i + 1));
+                    const tmp = order[i]; order[i] = order[r]; order[r] = tmp;
+                }
+                for (let oi = 0; oi < N; oi++) {
+                    const i = order[oi];
+                    const counts = new Map();
+                    neighbors[i].forEach((w, j) => {
+                        const lab = labels[j];
+                        counts.set(lab, (counts.get(lab) || 0) + w);
+                    });
+                    if (counts.size === 0) continue;
+                    let bestLab = labels[i], bestCnt = -1;
+                    counts.forEach((cnt, lab) => { if (cnt > bestCnt) { bestCnt = cnt; bestLab = lab; } });
+                    if (bestLab !== labels[i]) { labels[i] = bestLab; changed++; }
+                }
+                if (!changed) break;
+            }
+            // relabel contiguous integers and cap to 8 colors
+            const labelMap = new Map();
+            let next = 0;
+            labels.forEach(l => { if (!labelMap.has(l)) labelMap.set(l, next++); });
+            const clusterIds = labels.map(l => labelMap.get(l));
+            const numClusters = Math.min(8, Math.max(...clusterIds) + 1);
+
+            // Color scale from CSS vars
+            const clusterColor = c => getComputedStyle(document.documentElement).getPropertyValue(`--cluster-${(c % 8) + 1}`).trim() || 'rgb(32, 94, 166)';
+
+            // Render SVG
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+            // Draw edges
+            const edgeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            edgeGroup.setAttribute('fill', 'none');
+            edgeGroup.setAttribute('stroke', 'currentColor');
+            edgeGroup.setAttribute('stroke-opacity', '0.25');
+            edgeGroup.setAttribute('stroke-width', '1');
+            edges.forEach(e => {
+                const a = nodes[e.source], b = nodes[e.target];
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', a.x.toFixed(1));
+                line.setAttribute('y1', a.y.toFixed(1));
+                line.setAttribute('x2', b.x.toFixed(1));
+                line.setAttribute('y2', b.y.toFixed(1));
+                edgeGroup.appendChild(line);
+            });
+            svg.appendChild(edgeGroup);
+
+            // Draw nodes
+            const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            nodes.forEach((n, i) => {
+                const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                c.setAttribute('cx', n.x.toFixed(1));
+                c.setAttribute('cy', n.y.toFixed(1));
+                c.setAttribute('r', '5');
+                c.setAttribute('fill', clusterColor(clusterIds[i]));
+                c.setAttribute('fill-opacity', '0.8');
+                c.setAttribute('stroke', 'currentColor');
+                c.setAttribute('stroke-opacity', '0.25');
+                c.dataset.paperId = papers[i].id;
+                c.dataset.cluster = String(clusterIds[i]);
+                // Accessible tooltip via <title>
+                const t = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                t.textContent = papers[i].title;
+                c.appendChild(t);
+                nodeGroup.appendChild(c);
+            });
+            svg.appendChild(nodeGroup);
+
+            // Legend (optional; hidden by default but kept for debugging)
+            const legend = document.getElementById('cluster-legend');
+            if (legend) {
+                legend.innerHTML = '';
+                for (let c = 0; c < numClusters; c++) {
+                    const item = document.createElement('span');
+                    item.className = 'item';
+                    const sw = document.createElement('span');
+                    sw.className = 'swatch';
+                    sw.style.backgroundColor = clusterColor(c);
+                    const label = document.createElement('span');
+                    label.textContent = `Cluster ${c+1}`;
+                    item.appendChild(sw); item.appendChild(label);
+                    legend.appendChild(item);
+                }
+            }
+
+            // DOM mapping for interactions
+            const idToCircle = new Map(Array.from(nodeGroup.querySelectorAll('circle')).map(c => [c.dataset.paperId, c]));
+            papers.forEach((p, i) => {
+                p.li.dataset.paperId = p.id;
+                p.li.dataset.cluster = String(clusterIds[i]);
+            });
+
+            function highlightCluster(cluster, on) {
+                const color = clusterColor(cluster);
+                const alphaBg = document.body.getAttribute('data-theme') === 'dark' ? 0.15 : 0.12;
+                const bg = toRgba(color, alphaBg);
+                papers.forEach(p => {
+                    if (p.li.dataset.cluster === String(cluster)) {
+                        p.li.style.backgroundColor = on ? bg : '';
+                        p.li.style.borderLeft = on ? `3px solid ${color}` : '';
+                    }
+                });
+                nodeGroup.querySelectorAll('circle').forEach(c => {
+                    if (c.dataset.cluster === String(cluster)) {
+                        c.setAttribute('fill-opacity', on ? '1' : '0.8');
+                        c.setAttribute('r', on ? '6' : '5');
+                    } else if (on) {
+                        c.setAttribute('fill-opacity', '0.25');
+                    } else {
+                        c.setAttribute('fill-opacity', '0.8');
+                        c.setAttribute('r', '5');
+                    }
+                });
+            }
+
+            function highlightPaper(paperId, on) {
+                const c = idToCircle.get(paperId);
+                if (c) {
+                    c.setAttribute('stroke-opacity', on ? '0.8' : '0.25');
+                    c.setAttribute('stroke-width', on ? '2' : '1');
+                }
+            }
+
+            // Hover interactions from SVG cluster circles
+            nodeGroup.addEventListener('pointerover', e => {
+                const target = e.target;
+                if (target && target.tagName === 'circle') {
+                    highlightCluster(target.dataset.cluster, true);
+                }
+            });
+            nodeGroup.addEventListener('pointerout', e => {
+                const target = e.target;
+                if (target && target.tagName === 'circle') {
+                    highlightCluster(target.dataset.cluster, false);
+                }
+            });
+            nodeGroup.addEventListener('click', e => {
+                const target = e.target;
+                if (target && target.tagName === 'circle') {
+                    const pid = target.dataset.paperId;
+                    const li = document.querySelector(`li[data-paper-id="${pid}"]`);
+                    if (li) {
+                        li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        li.classList.add('pulse');
+                        setTimeout(() => li.classList.remove('pulse'), 1200);
+                    }
+                }
+            });
+
+            // Hover interactions from list to circle
+            papers.forEach(p => {
+                p.li.addEventListener('pointerover', () => highlightPaper(p.id, true));
+                p.li.addEventListener('pointerout', () => highlightPaper(p.id, false));
+            });
+
+            // Utilities
+            function extractYearFromLi(li) {
+                if (!li) return null;
+                const text = li.textContent || '';
+                const m = text.match(/(20\d{2}|19\d{2})/);
+                return m ? parseInt(m[1], 10) : null;
+            }
+            function tokenize(text) {
+                const stop = new Set([
+                    'the','and','of','in','on','for','a','an','to','with','by','from','at','as','is','are','be','or','vs','vs.','using','via','based','over','into','across','through','study','analysis','effect','effects','function','functions','model','models'
+                ]);
+                return text
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s]/g, ' ')
+                    .split(/\s+/)
+                    .filter(t => t.length > 1 && !stop.has(t));
+            }
+            function toRgba(rgb, alpha) {
+                const m = rgb.match(/rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/);
+                if (!m) return rgb;
+                return `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${alpha})`;
+            }
+        })();
     </script>
 </body>
 </html>
