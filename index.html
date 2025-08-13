@@ -247,9 +247,9 @@
         .puzzle-header {
             display: flex;
             align-items: baseline;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--nav-color);
             justify-content: center;
         }
@@ -271,9 +271,9 @@
         /* New SVG Graph Styles */
         #graph {
             width: 100%;
-            max-width: 320px;
+            max-width: 260px;
             height: auto;
-            margin: 8px auto 6px auto;
+            margin: 6px auto 4px auto;
             display: block;
         }
 
@@ -288,7 +288,7 @@
         .node text {
             fill: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 11px; /* Reduced from 14px */
+            font-size: 10px; /* Reduced from 11px */
             font-weight: bold;
             text-anchor: middle;
             dominant-baseline: central;
@@ -311,19 +311,19 @@
 
         .edge {
             stroke: var(--nav-color);
-            stroke-width: 2px;
+            stroke-width: 1.75px;
             transition: stroke 0.3s ease;
         }
         
         .edge.selected {
             stroke: var(--nav-hover-color);
-            stroke-width: 3px; /* Make selected edges slightly thicker */
+            stroke-width: 2.5px; /* Make selected edges slightly thicker */
         }
 
         .edge-label {
             fill: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 9px; /* Reduced from 12px */
+            font-size: 8px; /* Reduced from 9px */
             text-anchor: middle;
             dominant-baseline: central;
             pointer-events: none;
@@ -331,11 +331,11 @@
         }
 
         .puzzle-feedback {
-            min-height: 18px;
+            min-height: 16px;
             font-size: 0.9rem;
             text-align: center;
             color: var(--link-color);
-            margin-top: 4px;
+            margin-top: 2px;
         }
         
         .revealed-email {
@@ -343,7 +343,7 @@
              font-family: monospace;
              color: var(--link-color);
              text-align: center;
-             margin-top: 4px;
+             margin-top: 2px;
         }
     </style>
 </head>
@@ -384,9 +384,9 @@
             <div class="email-puzzle" id="emailPuzzleContainer">
                 <div class="puzzle-header">
                     <h4 class="puzzle-title">Solve for Email</h4>
-                    <p class="puzzle-instructions">Find the minimum-cost path from <strong>S</strong> to <strong>T</strong>. Click the nodes in sequence.</p>
+                    <p class="puzzle-instructions">Click the minimum-cost path from <strong>S</strong> to <strong>T</strong>.</p>
                 </div>
-                <svg id="graph" viewBox="0 0 300 180" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
+                <svg id="graph" viewBox="0 0 220 140" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
                 <div id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></div>
             </div>
 
@@ -428,33 +428,26 @@
         const puzzleContainerEl = document.getElementById('emailPuzzleContainer'); // Get container for reveal
 
         const graphData = {
-            nodes: { // Coordinates adjusted for compact 300x180 viewBox
-                S: { x: 37.5, y: 90, label: "S" },
-                A: { x: 112.5, y: 30, label: "A" },
-                B: { x: 112.5, y: 150, label: "B" },
-                C: { x: 187.5, y: 30, label: "C" },
-                D: { x: 187.5, y: 150, label: "D" },
-                T: { x: 262.5, y: 90, label: "T" }
+            nodes: { // Compact 220x140 diamond
+                S: { x: 30,  y: 70,  label: "S" },
+                X: { x: 110, y: 25,  label: "X" },
+                Y: { x: 110, y: 115, label: "Y" },
+                T: { x: 190, y: 70,  label: "T" }
             },
             edges: [
-                { from: 'S', to: 'A', weight: 2 },
-                { from: 'S', to: 'B', weight: 5 },
-                { from: 'S', to: 'D', weight: 6 }, // Updated weight
-                { from: 'A', to: 'C', weight: 2 },
-                { from: 'B', to: 'D', weight: 1 },
-                { from: 'C', to: 'T', weight: 3 },
-                { from: 'D', to: 'T', weight: 2 }
+                { from: 'S', to: 'X', weight: 2 },
+                { from: 'S', to: 'Y', weight: 3 },
+                { from: 'X', to: 'T', weight: 3 },
+                { from: 'Y', to: 'T', weight: 1 }
             ],
             // Adjacency list for easier lookup during interaction
             adjacency: {
-                S: { A: 2, B: 5, D: 6 },
-                A: { S: 2, C: 2 },
-                B: { S: 5, D: 1 },
-                C: { A: 2, T: 3 },
-                D: { S: 6, B: 1, T: 2 }, // Include S for completeness, T included
-                T: { C: 3, D: 2 }       // T is endpoint, technically no outgoing needed for puzzle
+                S: { X: 2, Y: 3 },
+                X: { S: 2, T: 3 },
+                Y: { S: 3, T: 1 },
+                T: { X: 3, Y: 1 }
             },
-            minCost: 7,
+            minCost: 4,
             startNode: 'S',
             endNode: 'T'
         };
@@ -525,7 +518,7 @@
                 const circle = document.createElementNS(svgNS, 'circle');
                 circle.setAttribute('cx', node.x);
                 circle.setAttribute('cy', node.y);
-                circle.setAttribute('r', 9);
+                circle.setAttribute('r', 8);
                 g.appendChild(circle);
 
                 const text = document.createElementNS(svgNS, 'text');
