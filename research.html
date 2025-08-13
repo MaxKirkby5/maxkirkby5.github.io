@@ -111,6 +111,30 @@
             margin-bottom: 1.5rem;
         }
         
+        /* Compact papers list */
+        .papers-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.6rem 0 0 0;
+        }
+
+        .papers-list li {
+            margin: 0.35rem 0;
+        }
+
+        .papers-list .title {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .papers-list .meta {
+            color: #666;
+        }
+
+        [data-theme="dark"] .papers-list .meta {
+            color: #aaa;
+        }
+
         .paper-title {
             font-size: 1.2rem;
             font-weight: 500;
@@ -225,95 +249,74 @@
     <main>       
         <section>
             <h2>Primary</h2>
+            <ul class="papers-list">
+                <li>
+                    <a class="title" href="https://parsed.com/research/do-transformers-notice-their-own-mistakes-finding-a-linear-hallucination-detector-inside-llms">Do transformers notice their own mistakes? Finding a linear hallucination detector inside LLMs</a>
+                     — O'Neill, Chalnev, Kirkby, Zhao and Jayasekara. <span class="meta">Parsed AI (2025)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://parsed.com/research/resurrecting-the-salmon-seeing-clearer-inside-llms-with-domain-specific-saes">Resurrecting the salmon: seeing clearer inside LLMs with domain-specific SAEs</a>
+                     — O'Neill, Kirkby and Jayasekara. <span class="meta">Parsed AI (2025)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">Guanylate-binding proteins: mechanisms of pattern recognition and antimicrobial functions</a>
+                     — Kirkby et al. <span class="meta">Trends in Biochemical Sciences (2023)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://www.cell.com/cell-host-microbe/fulltext/S1931-3128(22)00133-0">Streptococcus makes the cut: Gasdermin A-induced pyroptosis</a>
+                     — Zhao, Kirkby and Man. <span class="meta">Cell Host & Microbe Immunology (2022)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/ceo.14023">Running to save sight: The effects of exercise on retinal health and function</a>
+                     — Chu-Tan, Kirkby and Natoli. <span class="meta">Clinical & Experimental Ophthalmology (2021)</span>
+                </li>
+            </ul>
+        </section>
 
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://parsed.com/research/do-transformers-notice-their-own-mistakes-finding-a-linear-hallucination-detector-inside-llms">Do transformers notice their own mistakes? Finding a linear hallucination detector inside LLMs
-                </a></h3>
-                <div class="paper-authors">O'Neill, Chalnev, Kirkby, Zhao and Jayasekara</div>
-                <div class="paper-journal">Parsed AI (2025)</div>
-            </article>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://parsed.com/research/resurrecting-the-salmon-seeing-clearer-inside-llms-with-domain-specific-saes">Resurrecting the salmon: seeing clearer inside LLMs with domain-specific SAEs
-                </a></h3>
-                <div class="paper-authors">O'Neill, Kirkby and Jayasekara</div>
-                <div class="paper-journal">Parsed AI (2025)</div>
-            </article>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">Guanylate-binding proteins: mechanisms of pattern recognition and antimicrobial functions</a></h3>
-                <div class="paper-authors">Kirkby et al.</div>
-                <div class="paper-journal">Trends in Biochemical Sciences (2023)</div>
-            </article>
-            
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://www.cell.com/cell-host-microbe/fulltext/S1931-3128(22)00133-0">Streptococcus makes the cut: Gasdermin A-induced pyroptosis
-                </a></h3>
-                <div class="paper-authors">Zhao, Kirkby and Man</div>
-                <div class="paper-journal">Cell Host & Microbe Immunology (2022)</div>
-            </article>
-            
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/ceo.14023">Running to save sight: The effects of exercise on retinal health and function
-                </a></h3>
-                <div class="paper-authors">Chu-Tan, Kirkby and Natoli</div>
-                <div class="paper-journal">Clinical & Experimental Ophthalmology (2021)</div>
-            </article>
-        
         <section>
             <h2>Co-Authored</h2>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://pubmed.ncbi.nlm.nih.gov/39594256/#:~:text=Methods%3A%204DCarE%20(4D%2Dflow,(45%2D60%20min).">Four-Dimensional Flow MRI for Cardiovascular Evaluation
-                    (4DCarE): A Prospective Non-Inferiority Study of a Rapid
-                    Cardiac MRI Exam: Study Protocol and Pilot Analysis</a></h3>
-                <div class="paper-authors">Qin et al.</div>
-                <div class="paper-journal">Diagnostics (2024)</div>
-            </article>
-            
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://www.nature.com/articles/s41590-024-01988-6">Inflammasome protein scaffolds the DNA damage complex during tumor development</a></h3>
-                <div class="paper-authors">Shen et al.</div>
-                <div class="paper-journal">Nature Immunology (2024)</div>
-            </article>
-            
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://www.embopress.org/doi/full/10.15252/embj.2022112558">Immunity against Moraxella catarrhalis requires guanylate‐binding proteins and caspase‐11‐NLRP3 inflammasomes</a></h3>
-                <div class="paper-authors">Enosi-Tuipulotu et al.</div>
-                <div class="paper-journal">EMBO Journal (2023)</div>
-            </article>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">Voluntary exercise modulates pathways associated with amelioration of retinal degenerative diseases</a></h3>
-                <div class="paper-authors">Chu-Tan et al.</div>
-                <div class="paper-journal">Frontiers in Physiology (2023)</div>
-            </article>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/imr.12906">Molecular mechanisms activating the NAIP‐NLRC4 inflammasome: implications in infectious disease, autoinflammation, and cancer</a></h3>
-                <div class="paper-authors">Kay et al.</div>
-                <div class="paper-journal">Immunological Reviews (2020)</div>
-            </article>
+            <ul class="papers-list">
+                <li>
+                    <a class="title" href="https://pubmed.ncbi.nlm.nih.gov/39594256/#:~:text=Methods%3A%204DCarE%20(4D%2Dflow,(45%2D60%20min).">Four-Dimensional Flow MRI for Cardiovascular Evaluation (4DCarE): A Prospective Non-Inferiority Study of a Rapid Cardiac MRI Exam: Study Protocol and Pilot Analysis</a>
+                     — Qin et al. <span class="meta">Diagnostics (2024)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://www.nature.com/articles/s41590-024-01988-6">Inflammasome protein scaffolds the DNA damage complex during tumor development</a>
+                     — Shen et al. <span class="meta">Nature Immunology (2024)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://www.embopress.org/doi/full/10.15252/embj.2022112558">Immunity against Moraxella catarrhalis requires guanylate‐binding proteins and caspase‐11‐NLRP3 inflammasomes</a>
+                     — Enosi-Tuipulotu et al. <span class="meta">EMBO Journal (2023)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">Voluntary exercise modulates pathways associated with amelioration of retinal degenerative diseases</a>
+                     — Chu-Tan et al. <span class="meta">Frontiers in Physiology (2023)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/imr.12906">Molecular mechanisms activating the NAIP‐NLRC4 inflammasome: implications in infectious disease, autoinflammation, and cancer</a>
+                     — Kay et al. <span class="meta">Immunological Reviews (2020)</span>
+                </li>
+            </ul>
         </section>
 
         <section>
             <h2>Conference Proceedings</h2>
+            <ul class="papers-list">
+                <li>
+                    <a class="title" href="https://rldm.org/">A spatial navigation paradigm for investigating hierarchical planning</a>
+                     — Kirkby et al. <span class="meta">Reinforcement Learning and Decision Making (RLDM) (2025)</span>
+                </li>
+                <li>
+                    <a class="title" href="https://symposium.mndassociation.org/wp-content/uploads/2023/11/LOW-RES-FOR-WEBSITE-FINAL.pdf">Multi-modal detection of changes in MND for the quantitative evaluation of response to 3K3A-APC treatment</a>
+                     — Kirkby et al. <span class="meta">34th International Symposium on ALS/MND (2023)</span>
+                </li>
+            </ul>
+        </section>
 
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://rldm.org/">A spatial navigation paradigm for investigating hierarchical
-                    planning</a></h3>
-                <div class="paper-authors">Kirkby et al.</div>
-                <div class="paper-journal">Reinforcement Learning and Decision Making (RLDM) (2025)</div>
-            </article>
-
-            <article class="paper">
-                <h3 class="paper-title"><a href="https://symposium.mndassociation.org/wp-content/uploads/2023/11/LOW-RES-FOR-WEBSITE-FINAL.pdf">Multi-modal detection of changes
-                    in MND for the quantitative evaluation
-                    of response to 3K3A-APC treatment</a></h3>
-                <div class="paper-authors">Kirkby et al.</div>
-                <div class="paper-journal">34th International Symposium on ALS/MND (2023)</div>
-            </article>
-            
+        <section>
+            <h2>Blogs</h2>
+            <ul class="papers-list">
+            </ul>
         </section>
     </main>
 
