@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max Kirkby</title>
-    <meta name="description" content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
-    <meta property="og:description" content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
-    <meta name="twitter:description" content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
+    <meta name="description"
+        content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
+    <meta property="og:description"
+        content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
+    <meta name="twitter:description"
+        content="I'm a Rhodes Scholar at Oxford and a Co-Founder of Parsed, an AI startup based in San Francisco. I'm originally from Adelaide, South Australia.">
     <link rel="icon" href="images/dithered-icon.png" type="image/png">
     <style>
         :root {
@@ -16,7 +20,7 @@
             --nav-color: #666666;
             --nav-hover-color: rgb(32, 94, 166);
         }
-        
+
         [data-theme="dark"] {
             --background-color: #1f2022;
             --text-color: #e0e0e0;
@@ -24,7 +28,7 @@
             --nav-color: #a0a0a0;
             --nav-hover-color: rgb(94, 151, 218);
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-color);
@@ -35,73 +39,73 @@
             padding: 20px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 60px;
         }
-        
+
         nav {
             display: flex;
             gap: 20px;
             align-items: center;
         }
-        
+
         nav a {
             color: var(--nav-color);
             text-decoration: none;
             font-size: 1.1rem;
             transition: color 0.3s ease;
         }
-        
+
         nav a:hover {
             color: var(--nav-hover-color);
         }
-        
+
         h1 {
             font-size: 2.2rem;
             margin-bottom: 1.5rem;
             font-weight: 600;
         }
-        
+
         h2 {
             font-size: 1.8rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
             font-weight: 600;
         }
-        
+
         p {
             margin-bottom: 1.2rem;
             font-size: 1.1rem;
         }
-        
+
         a {
             color: var(--link-color);
             text-decoration: none;
             transition: opacity 0.2s ease;
         }
-        
+
         a:hover {
             opacity: 0.8;
         }
-        
+
         .external-link::after {
             content: "↗";
             display: inline-block;
             margin-left: 3px;
         }
-        
+
         ol {
             padding-left: 2rem;
         }
-        
+
         li {
             margin-bottom: 0.8rem;
         }
-        
+
         /* Simplified toggle switch styling */
         .theme-toggle-wrapper {
             position: relative;
@@ -110,13 +114,13 @@
             height: 28px;
             margin-left: 10px;
         }
-        
+
         .theme-toggle {
             opacity: 0;
             width: 0;
             height: 0;
         }
-        
+
         .toggle-slider {
             position: absolute;
             cursor: pointer;
@@ -129,7 +133,7 @@
             border-radius: 28px;
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .toggle-slider:before {
             position: absolute;
             content: "";
@@ -141,28 +145,28 @@
             transition: .4s;
             border-radius: 50%;
         }
-        
+
         /* Dark mode */
-        .theme-toggle:checked + .toggle-slider {
+        .theme-toggle:checked+.toggle-slider {
             background-color: #3a3a3a;
         }
-        
-        .theme-toggle:checked + .toggle-slider:before {
+
+        .theme-toggle:checked+.toggle-slider:before {
             transform: translateX(26px);
         }
-        
+
         .site-title {
             font-weight: 500;
             font-size: 1.1rem;
         }
-        
+
         .name-highlight {
             color: rgb(102, 128, 11);
             cursor: pointer;
             position: relative;
             display: inline-block;
         }
-        
+
         .hover-photo {
             position: absolute;
             width: 105px;
@@ -176,51 +180,51 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
             z-index: 10;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
-        
+
         .hover-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .name-highlight:hover > .hover-photo,
-        .name-highlight > .hover-photo:hover {
+
+        .name-highlight:hover>.hover-photo,
+        .name-highlight>.hover-photo:hover {
             opacity: 1;
             pointer-events: auto;
         }
-        
+
         .site-title a {
             text-decoration: none;
         }
-        
+
         .projects {
             color: #4a7a9d;
         }
-        
+
         .content-wrapper {
             margin-top: 40px;
         }
-        
+
         .profile-photo {
             display: none;
         }
-        
+
         .bio-content {
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         .bio-content h2 {
             margin-top: 0;
         }
-        
+
         footer {
             margin-top: 40px;
             padding: 0;
         }
-        
+
         .social-links {
             display: flex;
             justify-content: flex-start;
@@ -228,18 +232,18 @@
             margin-top: 20px;
             padding-left: 0;
         }
-        
+
         .social-link {
             color: var(--link-color);
             text-decoration: none;
             font-size: 1.1rem;
             transition: opacity 0.2s ease;
         }
-        
+
         .social-link:hover {
             opacity: 0.8;
         }
-        
+
         /* Puzzle Styles */
         .email-puzzle {
             margin-top: 15px;
@@ -270,7 +274,7 @@
             color: var(--text-color);
             font-weight: normal;
         }
-        
+
         /* New SVG Graph Styles */
         #graph {
             width: 100%;
@@ -287,28 +291,30 @@
             transition: fill 0.3s ease, stroke 0.3s ease;
             cursor: pointer;
         }
-        
+
         .node text {
             fill: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 10px; /* Reduced from 11px */
+            font-size: 10px;
+            /* Reduced from 11px */
             font-weight: bold;
             text-anchor: middle;
             dominant-baseline: central;
-            pointer-events: none; /* Text shouldn't capture clicks */
+            pointer-events: none;
+            /* Text shouldn't capture clicks */
             transition: fill 0.3s ease;
         }
 
         .node:hover circle {
-             stroke: var(--nav-hover-color);
+            stroke: var(--nav-hover-color);
         }
-        
+
         .node.selected circle {
             fill: var(--nav-hover-color);
             stroke: var(--nav-hover-color);
         }
 
-         .node.selected text {
+        .node.selected text {
             fill: var(--background-color);
         }
 
@@ -317,20 +323,22 @@
             stroke-width: 1.75px;
             transition: stroke 0.3s ease;
         }
-        
+
         .edge.selected {
             stroke: var(--nav-hover-color);
-            stroke-width: 2.5px; /* Make selected edges slightly thicker */
+            stroke-width: 2.5px;
+            /* Make selected edges slightly thicker */
         }
 
         .edge-label {
             fill: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 8px; /* Reduced from 9px */
+            font-size: 8px;
+            /* Reduced from 9px */
             text-anchor: middle;
             dominant-baseline: central;
             pointer-events: none;
-             transition: fill 0.3s ease;
+            transition: fill 0.3s ease;
         }
 
         .puzzle-feedback {
@@ -340,16 +348,17 @@
             color: var(--link-color);
             margin-top: 2px;
         }
-        
+
         .revealed-email {
-             font-size: 1rem;
-             font-family: monospace;
-             color: var(--link-color);
-             text-align: center;
-             margin-top: 2px;
+            font-size: 1rem;
+            font-family: monospace;
+            color: var(--link-color);
+            text-align: center;
+            margin-top: 2px;
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="site-title">
@@ -366,30 +375,50 @@
         </nav>
     </header>
 
-    <main>        
+    <main>
         <div class="bio-content">
             <h2>me</h2>
-            <p>Hi, I’m <span class="name-highlight">Max Kirkby<span class="hover-photo"><img src="images/personalweb.jpg" alt="Max Kirkby"></span></span>. I’m a <a href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes Scholar</a> at Oxford and a Co-Founder of <a href="https://parsed.com/">Parsed</a>, an AI startup based in San Francisco. I’m originally from Adelaide, South Australia.</p>
+            <p>Hi, I’m <span class="name-highlight">Max Kirkby<span class="hover-photo"><img
+                            src="images/personalweb.jpg" alt="Max Kirkby"></span></span>. I’m a Co-Founder of <a href="https://parsed.com/">Parsed</a>, an AI startup
+                based in San Francisco, and a <a
+                    href="https://www.rhodeshouse.ox.ac.uk/scholar-community/rhodes-scholar-bios/rhodes-scholars-class-of-2023/max-kirkby/">Rhodes
+                    Scholar</a> at Oxford. I’m originally from Adelaide, South Australia.</p>
 
             <p>
-                At Oxford I am studying for a PhD in Computational Neuroscience. My research tries to understand the neural representations of hierarchical planning and the subgoals within these plans. I work with <a href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury Wellcome Centre in London.
+                At Parsed, I primarily research the methods for training smaller, faster and more efficient language models for specific use cases. See some of this work <a
+                href="https://parsed.com/research/lumina-building-self-improving-evaluation-through-customer-in-the-loop-refinement">here</a>, <a
+                href="https://parsed.com/research/practical-lora-research">here</a> and <a
+                href="https://parsed.com/research/training-loss-predicts-evaluation-performance-even-for-non-verifiable-tasks">here</a>.   
+            </p>
+                At Oxford I am studying for a PhD in Computational Neuroscience. My research tries to understand the
+                neural algorithms that represent hierarchical plans and the subgoals within these plans. I work with <a
+                    href="https://www.psy.ox.ac.uk/research/cognitive-circuits">Thomas Akam</a> at Oxford and <a
+                    href="https://www.sainsburywellcome.org/web/groups/behrens-lab">Tim Behrens</a> at the Sainsbury
+                Wellcome Centre in London.
             </p>
 
             <p>
-                The other half of my life is dedicated to building <a href="https://parsed.com/">Parsed</a>. We train performant and interpretable language models for custom use cases using reinforcement learning.
-            </p>
-
-            <p>
-                In a past life I co-founded <a href="https://rake.news/">Rake News</a>, a personalised news platform built with language models that later evolved to provide enterprise-grade RAG. I was also a <a href="https://tuckwell.anu.edu.au/about/scholarship">Tuckwell Scholar</a> at the ANU, where I completed a Bachelor of Philosophy (Science) in biology, neuroscience and mathematics. I had the chance to do interesting research across <a href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">innate immunology</a>, <a href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">neurodegeneration</a> and <a href="https://www.mdpi.com/2075-4418/14/22/2590">cardiology</a> at the University of Sydney, ANU, and the Walter and Eliza Hall Institute.
+                In a past life I co-founded <a href="https://rake.news/">Rake</a>, a personalised news platform
+                built with language models that later evolved to provide enterprise-grade RAG. I was also a <a
+                    href="https://tuckwell.anu.edu.au/about/scholarship">Tuckwell Scholar</a> at the ANU, where I
+                completed a Bachelor of Philosophy (Science) in biology, neuroscience and mathematics. I had the chance
+                to do interesting research across <a href="https://www.biorxiv.org/content/10.1101/2024.09.15.613156v1.abstract">neuroimaging</a>, <a
+                    href="https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1116898/full">neurodegeneration</a>, 
+                    <a
+                    href="https://www.cell.com/trends/biochemical-sciences/fulltext/S0968-0004(23)00165-2">immunology</a>
+                and <a href="https://www.mdpi.com/2075-4418/14/22/2590">cardiology</a> at the University of Sydney, ANU,
+                and the Walter and Eliza Hall Institute.
             </p>
 
             <!-- Replace Email Puzzle Section -->
             <div class="email-puzzle" id="emailPuzzleContainer">
                 <div class="puzzle-header">
                     <h4 class="puzzle-title">Solve for Email</h4>
-                    <p class="puzzle-instructions">Click the minimum-cost path from <strong>S</strong> to <strong>T</strong>.</p>
+                    <p class="puzzle-instructions">Click the minimum-cost path from <strong>S</strong> to
+                        <strong>T</strong>.</p>
                 </div>
-                <svg id="graph" viewBox="0 0 220 140" role="application" aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
+                <svg id="graph" viewBox="0 0 220 140" role="application"
+                    aria-label="Shortest path puzzle graph. Start at S, end at T."></svg>
                 <div id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></div>
             </div>
 
@@ -397,14 +426,15 @@
                 <a href="https://www.linkedin.com/in/max-kirkby15/" class="social-link">LinkedIn</a>
                 <a href="https://github.com/MaxKirkby5" class="social-link">GitHub</a>
                 <a href="https://x.com/kirkby_max" class="social-link">Twitter/X</a>
-                <a href="https://scholar.google.com/citations?user=SoMPEoIAAAAJ&hl=en" class="social-link">Google Scholar</a>
+                <a href="https://scholar.google.com/citations?user=SoMPEoIAAAAJ&hl=en" class="social-link">Google
+                    Scholar</a>
             </div>
         </div>
     </main>
 
     <script>
         const themeToggle = document.querySelector('.theme-toggle');
-        
+
         function setTheme(isDark) {
             if (isDark) {
                 document.body.setAttribute('data-theme', 'dark');
@@ -415,15 +445,15 @@
             }
             localStorage.setItem('darkMode', isDark ? 'true' : 'false');
         }
-        
+
         const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-        
+
         setTheme(savedDarkMode);
-        
+
         themeToggle.addEventListener('change', () => {
             setTheme(themeToggle.checked);
         });
-        
+
         // --- New Shortest Path Puzzle Logic ---
         const svgNS = "http://www.w3.org/2000/svg";
         const graphSvg = document.getElementById('graph');
@@ -432,10 +462,10 @@
 
         const graphData = {
             nodes: { // Compact 220x140 diamond
-                S: { x: 30,  y: 70,  label: "S" },
-                X: { x: 110, y: 25,  label: "X" },
+                S: { x: 30, y: 70, label: "S" },
+                X: { x: 110, y: 25, label: "X" },
                 Y: { x: 110, y: 115, label: "Y" },
-                T: { x: 190, y: 70,  label: "T" }
+                T: { x: 190, y: 70, label: "T" }
             },
             edges: [
                 { from: 'S', to: 'X', weight: 2 },
@@ -469,7 +499,7 @@
             graphData.edges.forEach(edge => {
                 const n1 = graphData.nodes[edge.from];
                 const n2 = graphData.nodes[edge.to];
-                
+
                 const line = document.createElementNS(svgNS, 'line');
                 line.setAttribute('x1', n1.x);
                 line.setAttribute('y1', n1.y);
@@ -480,13 +510,13 @@
                 const edgeKey1 = `${edge.from}-${edge.to}`;
                 const edgeKey2 = `${edge.to}-${edge.from}`;
                 elements.edges[edgeKey1] = line;
-                elements.edges[edgeKey2] = line; 
+                elements.edges[edgeKey2] = line;
                 graphSvg.appendChild(line);
 
                 // Add Edge Label (Weight)
                 const midX = (n1.x + n2.x) / 2;
                 const midY = (n1.y + n2.y) / 2;
-                 // Calculate offset perpendicular to the line
+                // Calculate offset perpendicular to the line
                 const angle = Math.atan2(n2.y - n1.y, n2.x - n1.x);
                 const offsetX = Math.sin(angle) * 6;
                 const offsetY = -Math.cos(angle) * 6;
@@ -498,24 +528,24 @@
                 label.textContent = edge.weight;
                 graphSvg.appendChild(label);
             });
-            
-             // Draw Nodes
+
+            // Draw Nodes
             Object.entries(graphData.nodes).forEach(([id, node]) => {
                 const g = document.createElementNS(svgNS, 'g');
                 g.classList.add('node');
                 g.setAttribute('id', `svg-node-${id}`);
                 g.setAttribute('role', 'button');
                 g.setAttribute('tabindex', '0');
-                
+
                 // Build aria-label
                 let ariaLabel = `Node ${id}.`;
                 if (graphData.adjacency[id]) {
-                     ariaLabel += " Connects to: ";
-                     ariaLabel += Object.entries(graphData.adjacency[id])
-                                      .map(([neighbor, weight]) => `${neighbor} (cost ${weight})`)
-                                      .join(', ');
+                    ariaLabel += " Connects to: ";
+                    ariaLabel += Object.entries(graphData.adjacency[id])
+                        .map(([neighbor, weight]) => `${neighbor} (cost ${weight})`)
+                        .join(', ');
                 }
-                 g.setAttribute('aria-label', ariaLabel);
+                g.setAttribute('aria-label', ariaLabel);
 
 
                 const circle = document.createElementNS(svgNS, 'circle');
@@ -531,18 +561,18 @@
                 g.appendChild(text);
 
                 elements.nodes[id] = g; // Store the group element
-                
+
                 g.addEventListener('click', () => onNodeClick(id));
                 g.addEventListener('keydown', (event) => {
-                     if (event.key === 'Enter' || event.key === ' ') {
-                         onNodeClick(id);
-                     }
-                 });
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        onNodeClick(id);
+                    }
+                });
 
                 graphSvg.appendChild(g);
             });
-            
-             // Highlight start node initially
+
+            // Highlight start node initially
             highlightNode(graphData.startNode);
             updateFeedback(); // Initial feedback
         }
@@ -552,22 +582,22 @@
                 elements.nodes[nodeId].classList.add('selected');
             }
         }
-        
+
         function highlightEdge(nodeId1, nodeId2) {
-             const edgeKey = `${nodeId1}-${nodeId2}`;
-             if (elements.edges[edgeKey]) {
+            const edgeKey = `${nodeId1}-${nodeId2}`;
+            if (elements.edges[edgeKey]) {
                 elements.edges[edgeKey].classList.add('selected');
-             }
+            }
         }
 
-         function updateFeedback() {
+        function updateFeedback() {
             let pathStr = userPath.join(' → ');
             if (userPath.length > 1) {
-                 feedbackEl.textContent = `Path: ${pathStr} (Cost: ${runningCost})`;
+                feedbackEl.textContent = `Path: ${pathStr} (Cost: ${runningCost})`;
             } else {
                 feedbackEl.textContent = 'Click the next node in the path.';
             }
-         }
+        }
 
         function onNodeClick(nodeId) {
             const previousNode = userPath[userPath.length - 1];
@@ -575,13 +605,13 @@
             // Ignore clicks on already visited nodes or non-adjacent nodes
             if (userPath.includes(nodeId) || !graphData.adjacency[previousNode]?.[nodeId]) {
                 // Maybe add subtle feedback for invalid clicks? (Optional)
-                return; 
+                return;
             }
-            
+
             const cost = graphData.adjacency[previousNode][nodeId];
             runningCost += cost;
             userPath.push(nodeId);
-            
+
             highlightNode(nodeId);
             highlightEdge(previousNode, nodeId);
             updateFeedback();
@@ -592,33 +622,33 @@
         }
 
         function checkSolution() {
-             // Small delay for user to see the final path/cost
-             setTimeout(() => {
-                  if (runningCost === graphData.minCost && userPath[0] === graphData.startNode) {
+            // Small delay for user to see the final path/cost
+            setTimeout(() => {
+                if (runningCost === graphData.minCost && userPath[0] === graphData.startNode) {
                     showSuccess();
-                  } else {
+                } else {
                     const message = `Path cost ${runningCost}. The minimum cost is ${graphData.minCost}. Try again.`;
                     showError(message);
                     setTimeout(resetPuzzle, 1500); // Longer delay for error message
-                  }
-             }, 300);
+                }
+            }, 300);
         }
-        
+
         function showSuccess() {
-             feedbackEl.textContent = 'Correct! Revealing email...';
-              // Replace puzzle content with email
-              setTimeout(() => {
-                   puzzleContainerEl.innerHTML = '<p class="revealed-email">maxkirkby1 [at] gmail [dot] com</p>';
-              }, 500); // Delay reveal slightly
+            feedbackEl.textContent = 'Correct! Revealing email...';
+            // Replace puzzle content with email
+            setTimeout(() => {
+                puzzleContainerEl.innerHTML = '<p class="revealed-email">maxkirkby1 [at] gmail [dot] com</p>';
+            }, 500); // Delay reveal slightly
         }
 
         function showError(message) {
-             feedbackEl.textContent = message;
-             // Could add a visual cue like shaking the container (optional)
+            feedbackEl.textContent = message;
+            // Could add a visual cue like shaking the container (optional)
         }
 
         function resetPuzzle() {
-             drawGraph(); // Redrawing resets highlights, state, and feedback
+            drawGraph(); // Redrawing resets highlights, state, and feedback
         }
 
         // Initial draw
@@ -626,4 +656,5 @@
 
     </script>
 </body>
+
 </html>
