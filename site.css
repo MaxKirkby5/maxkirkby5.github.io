@@ -71,8 +71,13 @@ a:focus-visible { outline: 2px solid var(--link-color); outline-offset: 4px; }
 .social-link svg { display: block; width: 22px; height: 22px; fill: currentColor; }
 .social-link:hover, .social-link:focus-visible { background: #1116b508; text-decoration: none; }
 
-.papers-list { list-style: none; padding: 0; margin: .6rem 0 0; }
-.papers-list li { margin-bottom: 1.5em; }
+.research { font-size: 15.5px; line-height: 1.4; }
+.research > header { margin-bottom: 44px; }
+.research h2 { font-size: 20px; margin: 26px 0 12px; }
+.research main > section:first-child > h2 { margin-top: 0; }
+.papers-list { list-style: decimal; padding-left: 24px; margin: 0; }
+.papers-list li { padding-left: 3px; margin-bottom: 8px; }
+.papers-list li::marker { color: var(--muted-color); font-size: 12px; font-variant-numeric: tabular-nums; }
 .papers-list .title { font-weight: 500; }
 .papers-list .meta { color: var(--muted-color); }
 
