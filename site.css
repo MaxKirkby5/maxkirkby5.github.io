@@ -81,29 +81,11 @@ a:focus-visible { outline: 2px solid var(--link-color); outline-offset: 4px; }
 .papers-list .title { font-weight: 500; }
 .papers-list .meta { color: var(--muted-color); }
 
-.writing-intro { margin-bottom: 3rem; }
-.writing-intro p, .post-summary, .post-date, .post-state, .post-kicker, .post-dek, .post-meta {
-    color: var(--muted-color);
-}
-.post-list { border-top: 1px solid var(--rule-color); }
-.post-item { display: grid; grid-template-columns: 130px 1fr; gap: 24px; padding: 1.6rem 0; border-bottom: 1px solid var(--rule-color); }
-.post-date { font-size: .95rem; padding-top: .22rem; }
-.post-summary { margin: 0; }
-.post-state { display: inline-block; margin-top: .75rem; font-size: .95rem; }
-.back-link { display: inline-block; margin-bottom: 2rem; color: var(--muted-color); font-size: 1rem; }
-.post-header { padding-bottom: 1.6rem; margin-bottom: 2rem; border-bottom: 1px solid var(--rule-color); }
-.post-header h1 { margin-bottom: 1rem; }
-.post-kicker { margin-bottom: .55rem; font-size: .95rem; }
-.post-dek { font-size: 1.1em; margin-bottom: 1rem; }
-.post-meta { font-size: .95rem; }
-.draft-note { border-left: 3px solid var(--link-color); padding: .9rem 1rem; margin-bottom: 2rem; }
-
 @media (max-width: 520px) {
     body { padding: 26px 22px 44px; }
     body > header { align-items: baseline; flex-wrap: wrap; gap: 14px; margin-bottom: 42px; }
     nav { gap: 18px; }
     .site-title, nav a { font-size: 15px; }
-    .post-item { grid-template-columns: 1fr; gap: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
